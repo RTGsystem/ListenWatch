@@ -1,0 +1,309 @@
+/*根*/
+:root {
+	--header-height: 45px;
+	--header-background: #4589cb;
+	--header-hover: #fff;
+}
+/*滚动条*/
+::-webkit-scrollbar {
+    display: none;
+}
+/*通配*/
+* {
+	margin: 0;
+}
+ul{
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+/*头栏开始*/
+#header {
+	background: var(--header-background);
+	height: var(--header-height);
+	width: 100%;
+	z-index: 3;
+}
+#log-info{
+	float: right;
+	margin-right: 35px;
+	color: #fff;
+}
+#log-info ul li{
+	list-style: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-top: 12px;
+	margin-left: 25px;
+}
+/*头栏结束*/
+/*内容开始*/
+#content{
+	width: 100%;
+}
+/*导航栏开始*/
+.leader{
+	width: 200px;
+	color: white;
+	line-height: 35px;
+	background: #2d2d2d;
+	position: fixed;
+	left: -200px;
+	z-index: 10;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.leader ul li{
+	list-style: none;
+	padding-left: 12px;
+	cursor: pointer;
+}
+.leader ul li:hover{
+	background: var(--header-hover);
+	color: #000;
+}
+.module{
+	color: white;
+	margin-top: 12px;
+	margin-left: 12px;
+	cursor: pointer;
+}
+/*变黑背景*/
+#background{
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	background: rgb(0,0,0);
+	opacity: 0;
+	filter: alpha(opacity=0);
+	z-index: 2;
+	display: none;
+}
+/*导航栏结束*/
+/*视频开始*/
+.view{
+	width: 100%;
+}
+.viewer{
+	background: black;
+	left: 35px;
+	top: 80px;
+	position: absolute;
+	z-index: 1;
+}
+/*节目单开始*/
+.detail{
+	float: right;
+	position: absolute;
+	top: 80px;
+	right: 35px;
+	background: #464646;
+	z-index: 1;
+}
+/*日期开始*/
+#date-control{
+	display: inline-block;
+	text-align: center;
+	color: #ffffff;
+	vertical-align: middle;
+	margin: 20px auto;
+	margin-left: 20px;
+}
+#date-control>div{
+	display: table-cell;
+}
+#date{
+	background: #fff;
+	width: 110px;
+	color: #000;
+	cursor: pointer;
+}
+#confirm{
+	height: 35px;
+	background: #fff;
+	border: none;
+	color: #000;
+	margin: 0 20px 20px 20px;
+	padding: 0;
+	outline: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+/*日历弹窗*/
+.laydate-box{
+	height: 34px;
+	width: 154px;
+	border: none;
+	margin: 100px 0 0 200px;	
+	position: relative;
+}
+#date{
+	display: block;
+	font-size: 16px;
+	line-height: 30px;	
+}
+.select-date{
+	position: absolute;
+	left: 20px;
+	top: 70px;
+	width: 247px;
+	height: 301px;
+	border: 1px solid #58abff;
+	display: block;
+	background: #fff;
+	display: none;
+}
+.select-date-header{
+	height: 48px;
+	border-bottom: 1px solid #58abff;
+}
+.heade-ul{
+	height: 49px;
+}
+.header-item{
+	height: 28px;
+	float: left;
+	margin-top: 9px;
+}
+.header-item select{
+	height: 28px;
+}
+.header-item-one select{
+	width: 68px;
+	margin-left: 10px;
+	height: 30px;
+	outline: none;
+}
+.header-item-one{
+	height: 30px;
+}
+.header-item-two i{
+	display: block;
+	float: left;
+	height: 28px;
+	width: 28px;
+	line-height: 28px;
+	text-align: center;
+	cursor: pointer;
+}
+.header-item-two i{
+	display: block;
+	float: left;
+	height: 28px;
+	width: 28px;
+	line-height: 28px;
+	text-align: center;
+	cursor: pointer;
+}
+.header-item-two{
+	border: 1px solid #ccc;
+	margin-left: 10px;
+}
+.header-item-two select{
+	float: left;
+	border: none;
+	outline: none;
+}
+.header-item-two i:nth-child(1){
+	border-right: 1px solid #ccc;
+}
+.header-item-two i:nth-child(3){
+	border-left: 1px solid #ccc;
+}
+.header-item-three{
+	margin-left: 30px;
+	width: 73px;
+}
+.header-item-three span{
+	display: block;
+	height: 100%;
+	border: 1px solid #d8d8d8;
+	background: #f9f9f9;
+	line-height: 28px;
+	text-align: center;
+	font-size: 14px;
+	width: 100%;
+	cursor: pointer;
+}
+.header-item-three span:hover{
+	border-color: #388bff;
+}
+.header-item-three span.active{
+	border-color: #388bff;
+}
+.week-list{
+	height: 35px;
+	width: 100%;
+	border-bottom: 1px solid #c8cacc;
+}
+.week-list li{
+	float: left;
+	height: 35px;
+	width: 33px;
+	text-align: center;
+	line-height: 35px;
+	font-size: 15px;
+	margin: 0 1px;
+	/*font-weight: bold;*/
+	
+}
+.week-list li:nth-child(7){
+	color:#e02d2d
+}
+.week-list li:nth-child(1){
+	color:#e02d2d
+}
+.tabel-line{
+	height: 35px;
+	border-bottom: 1px solid #c8cacc;
+}
+.tabel-ul{
+	height: 35px;
+}
+.tabel-li{
+	height: 31px;
+	width: 29px;
+	text-align: center;
+	line-height: 31px;
+	float: left;
+	border: 2px solid #fff;
+	margin: 0 1px;
+}
+.tabel-li.preDays{
+	color: #bfbfbf;
+}
+.tabel-li.nextDay{
+	color: #bfbfbf;
+}
+.tabel-li:hover{
+	border-color: #ffbb00;
+}
+.tabel-li.showClick{
+	border-color: #ffbb00;
+}
+.tabel-li.active{
+	background: #ffbb00;
+	color: #fff !important;	border-color:#ffbb00;
+}
+.tabel-li.weekColor{
+	color:#e02d2d;
+}
+/*节目单*/
+#con_list{
+	background: #2d2d2d;
+	color: white;
+	margin: 0 20px 20px 20px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#con_list ul li{
+	list-style: none;
+	line-height: 36px;
+	padding-left: 13px;
+	cursor: pointer;
+}
+#con_list ul li:hover{
+	background: var(--header-hover);
+	color: #000;
+}

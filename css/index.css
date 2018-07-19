@@ -1,0 +1,269 @@
+/*#pic1{
+	margin-top: 40px;
+	margin-left: 20px;
+	 width: 400px;
+	 height: 200px;
+}*/
+
+@font-face{
+	font-family: newfont;
+	src:url('../font/LiangPeiShengXiaoCuanFan.ttf') 
+	format('font-truetype');
+}
+@charset "utf-8";
+::-webkit-scrollbar {
+	width: 5px;
+	/*滚动条宽度*/
+	height: 5px;
+	/*滚动条高度*/
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	/*overflow-y: hidden;*/
+}
+
+#bg {
+	width: auto;
+	height: auto;
+}
+
+#focusImg {
+	width: 1440px;
+	height: 700px;
+	/*width: 84%;*/
+	/*height: 10%;*/
+}
+
+.focusBox {
+	position: absolute;
+	top: 650px;
+	width: 120px;
+	left: 720px;
+	margin-left: -60px;
+	list-style: none;
+}
+
+.focusBox li {
+	float: left;
+	margin-right: 10px;
+	width: 13px;
+	height: 13px;
+	border-radius: 10px;
+	background-color: gray;
+	cursor: pointer;
+}
+
+.focusBox li.cur {
+	background: white;
+	/*opacity: 0.6;*/
+	filter: alpha(opacity=60);
+}
+
+/*#red {
+	color: red;
+}*/
+
+/*#login {
+	position: absolute;
+	top: 150px;
+	left: 930px;
+	width: 350px;
+	height: 360px;
+	background-color:rgba(255,255,255,0.7);
+	border-radius: 8px;
+	box-shadow: 0px 0px 10px 5px #aaa;
+}*/
+
+
+#main{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1440px;
+	height: 700px;
+	background-color: rgba(0,0,0,0);
+}
+
+#footmain{
+	position: absolute;
+	top: 700px;
+	left: 0;
+	width: 1440px;
+	height: 150px;
+	background-color: rgba(0,0,0,0);
+	
+}
+
+
+#fic04{
+	margin-top: 20px;
+	margin-left: 380px;
+	width: 10%;
+}
+#fic01{
+	margin-top: 20px;
+	margin-left: 60px;
+	width: 10%;
+}
+#fic02{
+	margin-left: 60px;
+	width: 6%;
+	opacity: 0.9;
+}
+#fic03{
+	margin-left: 60px;
+	width: 7%;
+}
+
+#head{
+	position: absolute;
+	
+	width: 1440px;
+	height: 100px;
+	
+}
+
+#zjws{
+	margin-top: 10px;
+	margin-left: 25px;
+	width: 7%;
+	opacity: 1;
+}
+
+/*#jtjk{
+	margin-left: 10px;
+	width: 17%;
+}*/
+
+#text4{
+	color: #1689cc;
+	position: relative;
+	top: -40px;
+	/*top: 10px;*/
+	font-weight: 1000;
+	font-size: 35px;
+	
+}
+.login-body{
+	width: 352px;
+	height: 340px;
+	vertical-align: middle; 
+	position: absolute; 
+	top: 150px; 
+	right: 80px;
+	border-radius: 3px; 
+	background: rgba(255,255,255,0.9);
+	padding:0 20px;
+	box-shadow: 0px 0px 10px 5px #999;
+}
+
+.login-body p.pass-form-login{
+	margin: 0;
+	font-size: 20px; 
+	text-align: center; 
+	padding: 40px 0 25px 0; 
+	font-weight: 100; 
+	color: #333; 
+	/*background: rgba(0,0,0,0); */
+	margin-left: 0;
+}
+
+.login-body .pass-text-input{
+	display: block; 
+	padding: 7px 10px; 
+	height: 26px; 
+	width: 325px; 
+	border: 1px solid #dedede; 
+	font-size: 16px; 
+	color: #666; 
+	line-height: 26px; 
+	/*background-color: rgba(255,255,255,0.9); */
+	padding-left: 15px;
+	position: relative; 
+	vertical-align: middle;
+}
+
+.login-body .username-input{
+	padding-left: 16px!important; 
+	border-bottom: 0; 
+	border-top-left-radius: 4px; 
+	border-top-right-radius: 4px;
+	margin: 0 auto; 
+}
+.login-body .password-input{
+	padding-left: 16px; 
+	border-bottom-left-radius: 4px; 
+	border-bottom-right-radius: 4px;
+	margin: 0 auto; 
+}
+
+.checkbox-item{
+	margin-top: 0; 
+	margin-bottom: 15px; 
+	padding-top: 19px; 
+}
+.remember-label{
+	color: gray;
+	font-size: smaller;
+}
+
+.submit-button{
+	text-align: center;
+	vertical-align: middle;
+	width: 100%; 
+	height: 41px; 
+	line-height: 41px;
+	background:#1689cc; 
+	border-radius: 4px; 
+	transition: .3s; 
+	font-size: 16px; 
+	border: 0; 
+	color: #fff; 
+	cursor: pointer; 
+	text-decoration: none; 
+	font-family: Microsoft YaHei,SimHei,Tahoma; 
+	font-weight: 100
+}
+
+
+.submit-button:hover{
+	box-shadow:0px 0px 5px 2px white inset;
+}
+
+.forget-item{
+	margin-top:0; 
+	margin-bottom: 15px; 
+	padding-top: 19px; 
+}
+
+
+
+.forgot-link{
+	position: relative;
+	right: 0px;
+	color: #1689cc;
+	font-size: smaller;
+	text-decoration: none;
+	font-family: Microsoft YaHei,SimHei,Tahoma;
+}
+
+.feedback{
+	position: relative;
+	left: 240px;
+	color:#1689cc;
+	font-size: smaller;
+	text-decoration: none;
+	font-family: Microsoft YaHei,SimHei,Tahoma;
+	cursor: pointer;
+}
+
+
+.forgot-link:hover{
+	color: gray;
+}
+
+.feedback:hover{
+	color: gray;
+}

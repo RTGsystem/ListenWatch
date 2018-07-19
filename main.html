@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>监听监看回放系统</title>
+	<script src="js/jquery/jquery-3.2.1.min.js"></script>
+	<script src="js/yjh_main.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/globel.js"></script>
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/globel.css">
+	<link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+	<!-- 头栏 -->
+	<header id="header">
+		<!-- 左边模块 -->
+		<span><i id="mod" style="font-size:25px;" class="fa fa-bars module" aria-hidden="true"></i></span>
+		<!-- 右边模块 -->
+		<div id="log-info">
+			<ul>
+				<li id="admin">管理界面</li>
+				<li id="exit">退出登录</li>
+			</ul>
+		</div>
+	</header>
+	<!-- 内容 -->
+	<div id="content">
+		<!-- 卫视导航 -->
+		<div class="leader">
+			<!-- 卫视列表 -->
+			<ul>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+			</ul>
+		</div>
+		<!-- 视频 -->
+		<div id="background"></div>
+		<div class="view">
+			<!-- 视频观看 -->
+			<div class="viewer"></div>
+			<!-- 视频列表 -->
+			<div class="detail">
+				<!-- 日期 -->
+				<div id="date-control">
+					<div id="date"></div>
+				</div>
+				<button id="confirm">搜索</button>
+				<div class="select-date">
+					<div class="select-date-header">
+						<ul class="heade-ul">
+							<li class="header-item header-item-one">
+								<select name="" id="yearList"></select>
+							</li>
+							<li class="header-item header-item-two" onselectstart="return false">
+								<select name="" id="monthList"></select>
+							</li>
+							<li class="header-item header-item-three" onselectstart="return false" >
+								<span class="reback">回到今天</span>
+							</li>
+						</ul>
+					</div>
+					<div class="select-date-body">
+						<ul class="week-list">
+							<li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li>
+						</ul>
+						<ul class="day-tabel"></ul>
+					</div>
+				</div>
+				<!-- 日期结束 -->
+				<div id="con_list">
+					<ul>
+						<li>1231</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li>
+						<li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
