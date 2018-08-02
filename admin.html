@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/admin.js"></script>
+		<script type="text/javascript" src="js/Chart.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/admin.css">
+		<link rel="stylesheet" href="font/iconfont.css" />
+		<link rel="stylesheet" href="css/globel.css">
+		<title>监听监看回放系统</title>
+	</head>
+	<body>
+		<div class="box">
+			<div class="header">
+				<a href="" class="header__logo">监听监看回放系统 · 管理系统</a>
+				<nav class="header__nav">
+					<a href="index.html" class="header__nav-item header__nav-item-2">退出</a>
+				</nav>
+			</div>
+			<div class="nav">
+				<div class="nav-top">
+					<div id="mini" style="border-bottom:1px solid rgba(255,255,255,0.1)"><img src="img/mini.png" ></div>
+				</div>
+				<ul id="lefter">
+					<li class="nav-item">
+						<a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>用户管理</span><i class="my-icon nav-more"></i></a>
+						<ul>
+							<li id="title1-1">
+								<a href="javascript:;"><span>添加用户</span></a>
+							</li>
+							<li id="title1-2">
+								<a href="javascript:;"><span>用户信息列表</span></a>
+							</li>
+							<li id="title1-3">
+								<a href="javascript:;"><span>用户权限列表</span></a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a href="javascript:;"><i class="my-icon nav-icon icon_2"></i><span>信息源配置</span><i class="my-icon nav-more"></i></a>
+						<ul>
+							<li id="title2-1">
+								<a href="javascript:;"><span>添加信息源</span></a>
+							</li>
+							<li id="title2-2">
+								<a href="javascript:;"><span>信息源列表</span></a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a href="javascript:;"><i class="my-icon nav-icon icon_3"></i><span>数据可视化</span><i class="my-icon nav-more"></i></a>
+						<ul>
+							<li id="title3-1">
+								<a href="javascript:;"><span>频道点击率</span></a>
+							</li>
+							<li id="title3-2">
+								<a href="javascript:;"><span>个人点击量</span></a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<!-- 侧边栏结束 -->
+			<!-- 内容1.1开始 -->
+			<div id="content1-1" class="body__screen-all">
+				<div class="screen-1">
+					<fieldset id="set2" class="screen-1-field">
+						<legend>添加用户</legend>
+						<div class="screen-add-list" style="width: 100%">
+								<ul class="screen-add-ul">
+									<li class="screen-add-tip">真实姓名：</li>
+									<li class="screen-add-input"><input type="text" id="input1-1_1" placeholder="输入真实姓名"/></li>
+								</ul>
+								<ul class="screen-add-ul">
+									<li class="screen-add-tip">用户名：</li>
+									<li class="screen-add-input"><input type="text" id="input2-1_1" placeholder="输入用户名" /></li>
+								</ul>
+								<ul class="screen-add-ul">
+									<li class="screen-add-tip">所属部门：</li>
+									<li class="screen-add-input">
+										<select class="screen-add-userdept" id="select1-1_1">
+											<option value="0">---请选择部门---</option>
+											<option value="1">部门1</option>
+											<option value="2">部门2</option>
+											<option value="3">部门3</option>
+										</select>
+									</li>
+								</ul>
+								<ul class="screen-add-ul">
+									<li class="screen-add-tip">设置密码：</li>
+									<li class="screen-add-input"><input type="password" id="input3-1_1" placeholder="输入密码"/></li>
+								</ul>
+								<ul class="screen-add-ul">
+									<li class="screen-add-tip">确认密码：</li>
+									<li class="screen-add-input"><input type="password" id="input4-1_1" placeholder="确认密码"/></li>
+								</ul>
+								<ul class="screen-add-ul">
+									<li class="screen-add-tip">配置权限：</li>
+									<li class="screen-add-input">
+										<div id="screen-userability">
+											<input type="checkbox" class="checkbox-quanxian" id="checkbox1" /> <label for="screen-userability-1">观看TV</label>
+											<input type="checkbox" class="checkbox-quanxian" id="checkbox2" /> <label for="screen-userability-2">观看FM</label>
+											<input type="checkbox" class="checkbox-quanxian" id="checkbox3" /> <label for="screen-userability-3">下载TV</label>
+											<input type="checkbox" class="checkbox-quanxian" id="checkbox4" /> <label for="screen-userability-4">下载FM</label>
+											<input type="checkbox" class="checkbox-quanxian" id="checkbox5" /> <label for="screen-userability-5">查看数据</label>
+										</div>
+									</li>
+								</ul>
+							<button class="screen-1-addbutton" onclick="addsuccess()">添加</button>
+						</div>
+					</fieldset>
+				</div>	
+			</div>
+			<!-- 内容1.1结束 -->
+			<!-- 内容1.2开始 -->
+			<div id="content1-2" class="body__screen-all">
+				<div class="screen-1">
+					<fieldset class="screen-1-field">
+						<legend>用户信息列表</legend>
+						<div class="screen-1-findbox">
+							<label for="select_1_2" style="margin-left: 50px;">按</label>
+							<select name="select_1_2" id="selectkey">
+								<option value="" checked>全选</option>
+								<option value="用户名">用户名</option>
+								<option value="姓名">姓名</option>
+								<option value="所属部门">所属部门</option>
+							</select>
+							<label for="select_1_2">查询</label>
+							<input id="select_input" class="screen-1-findbox-input" type="text" name="name" placeholder='请输入' autocomplete="off">
+							<button class="screen-1-findbox-button" onclick="selectUsers()" >查询</button>
+						</div>
+						<hr>
+						<ul class="screen-1-ul" style="border-top: 1px solid">
+							<li class="screen-1-li right-border" style="width: 20%">用户名</li>
+							<li class="screen-1-li right-border" style="width: 20%">姓名</li>
+							<li class="screen-1-li right-border" style="width: 20%">所属部门</li>
+							<li class="screen-1-li " style="width: 39%;">操作</li>
+						</ul>
+						<div id="content1_2" class="screen-1-list" style="width: 100%">
+							<!-- 
+							<ul class="screen-1-ul">
+								<li class="screen-1-li right-border" style="width: 20%">aaa</li>
+								<li class="screen-1-li right-border" style="width: 20%">sss</li>
+								<li class="screen-1-li right-border" style="width: 20%">ddd</li>
+								<li class="screen-1-li" style="width: 39%;">
+									<button class="screen-1-revise yrzhao" onclick="toggle_button_revise(event)">修改</button><button class="screen-1-delete" style="background-color: #c30;" onclick="createUlinScreen1_2('00002253','赵杨晶','融媒体技术中心研发部')">删除</button>
+								</li>
+							</ul> -->
+						</div>
+					</fieldset>
+				</div>	
+			</div>
+			<!-- 内容1.2结束 -->
+			<!-- 内容1.3开始 -->
+			<div id="content1-3" class="body__screen-all">
+				<div class="screen-1">
+					<fieldset class="screen-1-field">
+						<legend>用户权限列表</legend>
+						<div class="screen-1-findbox">
+							<!-- 搜索部分 -->
+							<label for="select_1_2" style="margin-left: 50px">按</label>
+							<select name="select_1_2" id="selectkey2">
+								<option value="" checked>全选</option>
+								<option value="用户名">用户名</option>
+								<option value="姓名">姓名</option>
+								<option value="所属部门">所属部门</option>
+							</select>
+							<label for="select_1_2">查询</label>
+							<input id="select_input2" class="screen-1-findbox-input" type="text" name="name" placeholder="请输入" autocomplete="off"/>
+							<button class="screen-1-findbox-button" onclick="selectUsers2()">查询</button>
+						</div>
+						<hr>
+						<!-- 表格部分 -->
+						<ul class="screen-1-ul" style="border-top: 1px solid">
+							<li class="screen-1-li right-border" style="width: 12%">用户名</li>
+							<li class="screen-1-li right-border" style="width: 12%">姓名</li>
+							<li class="screen-1-li right-border" style="width: 15%">所属部门</li>
+							<li class="screen-1-li right-border" style="width: 12%">收看直播权限</li>
+							<li class="screen-1-li right-border" style="width: 12%">下载视频权限</li>
+							<li class="screen-1-li right-border" style="width: 12%">收听广播权限</li>
+							<li class="screen-1-li right-border" style="width: 12%">下载广播权限</li>
+							<li class="screen-1-li " style="width: 12%;">查看数据权限</li>
+							</ul>
+						<div id="list" class="screen-1-list" style="width: 100%">
+							<ul class="screen-1-ul">
+								<li class="screen-1-li right-border" style="width: 12%">aaa</li>
+								<li class="screen-1-li right-border" style="width: 12%">sss</li>
+								<li class="screen-1-li right-border" style="width: 15%">sss</li>
+								<li class="screen-1-li right-border" style="width: 12%">
+									<input class="watchTV  allbtn" type="checkbox" name="box-watch" >
+								</li>
+								<li class="screen-1-li right-border" style="width: 12%">
+									<input class="loadTV  allbtn" type="checkbox" name="box-load1">
+								</li>
+								<li class="screen-1-li right-border" style="width: 12%">
+									<input class="listenFM  allbtn" type="checkbox" name="box-listen" >
+								</li>
+								<li class="screen-1-li right-border" style="width: 12%">
+									<input class="loadFM  allbtn" type="checkbox" name="box-load2" >
+								</li>
+								<li class="screen-1-li" style="width: 12%">
+									<input class="checkdata allbtn" type="checkbox" name="box-data">
+								</li>
+							</ul>
+							<ul class="screen-1-ul">
+								<li class="screen-1-li right-border" style="width: 12%">aaa</li>
+								<li class="screen-1-li right-border" style="width: 12%">sss</li>
+								<li class="screen-1-li right-border" style="width: 15%">sss</li>
+								<li class="screen-1-li right-border" style="width: 12%">
+									<input class="watchTV  allbtn" type="checkbox" name="box-watch"/>
+								</li>
+								<li class="screen-1-li right-border" style="width: 12%">
+									<input class="loadTV  allbtn" type="checkbox" name="box-load1"/>
+								</li>
+								<li class="screen-1-li right-border" style="width: 12%">
+									<input class="listenFM  allbtn" type="checkbox" name="box-listen"/>
+								</li>
+								<li class="screen-1-li right-border" style="width: 12%">
+									<input class="loadFM  allbtn" type="checkbox" name="box-load2"/>
+								</li>
+								<li class="screen-1-li" style="width: 12%">
+									<input class="checkdata allbtn" type="checkbox" name="box-data"/>
+								</li>
+							</ul>
+						</div>
+						<ul class="screen-1-ul">
+							<li class="screen-1-li right-border" style="width: 12%">&nbsp;</li>
+							<li class="screen-1-li right-border" style="width: 12%">&nbsp;</li>
+							<li class="screen-1-li right-border" style="width: 15%">&nbsp;</li>
+							<li class="screen-1-li right-border" style="width: 12%">
+								 <input type="checkbox"  onclick="changeState(0, this.checked)" id="watchTVbtn">
+								 <label  for="watchTVbtn" class="allchoice">全选</label> 
+							</li>
+							<li class="screen-1-li right-border" style="width: 12%">
+								 <input type="checkbox"  onclick="changeState(1, this.checked)" id="loadTVbtn">
+								 <label for="loadTVbtn" class="allchoice">全选</label>
+							</li>
+							<li class="screen-1-li right-border" style="width: 12%">
+								<input type="checkbox"  onclick="changeState(2, this.checked)" id="listenFMbtn">
+								<label class="allchoice" for="listenFMbtn">全选</label> 
+							</li>
+							<li class="screen-1-li right-border" style="width: 12%">
+								<input type="checkbox"  onclick="changeState(3, this.checked)" id="loadFMbtn">
+								<label class="allchoice" for="loadFMbtn">全选</label> 
+							</li>
+							<li class="screen-1-li" style="width: 12%">
+								<input type="checkbox"  onclick="changeState(4, this.checked)" id="checkdatabtn">
+								<label class="allchoice" for="checkdatabtn">全选</label> 
+							</li>
+						</ul>
+						<!-- 保存与撤销按钮 -->
+						<button class="screen-1-saveall" onclick="checkSave()">全部保存</button>
+						<button class="screen-1-saveall" onclick="checkCancel()">撤销</button>
+						<!-- <div class="screen-1-clearall">
+							<label id="allchoice" onclick="checkCancel(this.checked)">撤销</label>
+						</div> -->
+					</fieldset>
+				</div>
+			</div>
+			<!-- 内容1.3结束 -->
+			<!-- 内容2.1开始 -->
+			<div id="content2-1" class="body__screen-all">
+				<div class="screen-1">
+					<fieldset id="set" class="screen-1-field">
+						<legend>添加信息源</legend>
+						<div id="ycontent">
+							<div id="ytitle">
+								<span>信息源名称：</span><br/>
+								<span>信息源图标：</span><br/>
+								<span>类型：</span><br/>
+								<span>信息源链接：</span><br/>
+								<span>保存时间：</span>
+							</div>
+							<div id="yinput">
+								<input id="yinput1" type="text" placeholder="请输入频道或电台名称" /><br/>
+								<input id="yfile1" type="file" accept="image/*"/><br/>
+								<input id="yradio1" type="radio" name="type" value="1" checked />频道
+								<input id="yradio1" type="radio" name="type" value="2" />电台<br/>
+								<input id="yinput2" type="text" placeholder="请输入节目信息源地址" /><br/>
+								<input id="yinput3" type="number" value="7" />&nbsp;&nbsp;天<br/>
+								<button id="yadd" onclick="yadd()">添加</button>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<!-- 内容2.1结束 -->
+			<!-- 内容2.2开始 -->
+			<div id="content2-2" class="body__screen-all">
+				<div class="screen-1">
+					<fieldset class="screen-1-field">
+						<legend>信息源列表</legend>
+						<div class="screen-1-findbox">
+							<!-- 搜索部分 -->
+							<label for="select_1_2" style="margin-left: 50px;">按</label>
+							<select name="select_1_2" id="selectkey3">
+								<option value="" checked>全选</option>
+								<option value="信息源名称">信息源名称</option>
+								<option value="信息源类型">信息源类型</option>
+							</select>
+							<label for="select_1_2">查询</label>
+							<input id="select_input3" class="screen-1-findbox-input" type="text" name="name" placeholder="请输入" autocomplete="off">
+							<button class="screen-1-findbox-button" onclick="selectUsers_2_2()">查询</button>
+						</div>
+						<hr>
+						<ul class="screen-1-ul" style="border-top: 1px solid">
+							<li class="screen-1-li right-border" style="width: 20%">信息源名称</li>
+							<li class="screen-1-li right-border" style="width: 15%">类型</li>
+							<li class="screen-1-li right-border" style="width: 30%">信息源链接</li>
+							<li class="screen-1-li right-border" style="width: 15%">最大保存时间</li>
+							<li class="screen-1-li " style="width: 19%;">操作</li>
+						</ul>
+						<div id="content2_2" class="screen-1-list" style="width: 100%">
+							
+						</div>
+					</fieldset>
+				</div>	
+			</div>
+			<!-- 内容2.2结束 -->
+			<!-- 内容3.1开始 -->
+			<div id="content3-1" class="body__screen-all">
+				<div class="screen-1">
+					<fieldset class="screen-1-field">
+						<legend>频道点击率</legend>
+						<div class="container">
+							<canvas id="myChart1">
+								<script type="text/javascript">
+									let myChart1  =document.getElementById('myChart1').getContext('2d');
+
+									// 配置全局默认信息
+									Chart.defaults.global.defaultFontFamily = 'Lato';
+									Chart.defaults.global.defaultFontSize = 18;
+									Chart.defaults.global.defaultFontColor = '#777';
+
+									// 实例化Chart对象
+									let chart1 = new Chart(myChart1,{
+										type: 'bar', //pie圆形
+										data: {
+											labels: ["浙江卫视","深圳卫视","上海卫视","湖南卫视","天津卫视","四川卫视"],
+											datasets: [{
+												label: "频道点击率",
+												data: [72124,46456,12520,45545,77789,41211],
+												backgroundColor: [
+													'rgba(255,99,132,0.6)',
+													'rgba(54,162,235,0.6)',
+													'rgba(255,206,86,0.6)',
+													'rgba(75,192,45,0.6)',
+													'rgba(124,87,45,0.6)',
+													'rgba(255,14,45,0.6)',
+												],
+												borderWidth: 1,
+												borderColor: 'gray',
+												hoverBorderWidth: 2,
+												hoverBorderColor: 'green'
+											}]
+										},
+										options: {
+											title:{//title
+												display: true,
+												text: "频道点击率",
+												fontSize: 25
+											},
+											legend: {//图例
+												display: true,
+												position: 'right',
+												labels: {
+													fontColor:'#000'
+												}
+											},
+											layout: {//整体
+												padding: {
+													left: 50,right: 50,top: 50,bottom: 50
+												}
+											},
+											tooltips: {//悬浮样式
+												enable: true
+											}
+										}
+									});
+								</script>
+							</canvas>
+						</div>
+					</fieldset>
+				</div>	
+			</div>
+			<!-- 内容3.1结束 -->
+			<!-- 内容3.2开始 -->
+			<div id="content3-2" class="body__screen-all">
+				<div class="screen-1">
+					<fieldset class="screen-1-field">
+						<legend>个人点击量</legend>
+						<div class="container">
+							<canvas id="myChart2">
+								<script type="text/javascript">
+									let myChart2  =document.getElementById('myChart2').getContext('2d');
+									// 配置全局默认信息
+									Chart.defaults.global.defaultFontFamily = 'Lato';
+									Chart.defaults.global.defaultFontSize = 18;
+									Chart.defaults.global.defaultFontColor = '#777';
+									// 实例化Chart对象
+									let chart = new Chart(myChart2,{
+										type: 'bar', //pie圆形
+										data: {
+											labels: ["甲","乙","丙","丁","戊","己"],
+											datasets: [{
+												label: "个人点击量",
+												data: [465644,456456,456560,456465,459789,416111],
+												backgroundColor: [
+													'rgba(255,99,132,0.6)',
+													'rgba(54,162,235,0.6)',
+													'rgba(255,206,86,0.6)',
+													'rgba(75,192,45,0.6)',
+													'rgba(124,87,45,0.6)',
+													'rgba(255,14,45,0.6)',
+												],
+												borderWidth: 1,
+												borderColor: 'gray',
+												hoverBorderWidth: 2,
+												hoverBorderColor: 'green'
+											}]
+										},
+										options: {
+											title:{//title
+												display: true,
+												text: "个人点击量",
+												fontSize: 25
+											},
+											legend: {//图例
+												display: true,
+												position: 'right',
+												labels: {
+													fontColor:'#000'
+												}
+											},
+											layout: {//整体
+												padding: {
+													left: 50,right: 50,top: 50,bottom: 50
+												}
+											},
+											tooltips: {//悬浮样式
+												enable: true
+											}
+										}
+									});
+								</script>
+							</canvas>
+						</div>
+					</fieldset>
+				</div>	
+			</div>
+			<!-- 内容3.2结束 -->
+		</div>
+	</body>
+</html>
+<!-- 数据可视化部分 -->

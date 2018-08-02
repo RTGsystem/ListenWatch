@@ -1,26 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>监听监看回放系统</title>
 	<script src="js/jquery/jquery-3.2.1.min.js"></script>
 	<script src="js/yjh_main.js"></script>
-	<script src="js/main.js"></script>
 	<script src="js/globel.js"></script>
+	<script src="js/video/video.js"></script>
+	<script src="js/download/download.js"></script>
+	<script src="js/myVideo.js"></script>
+	<script src="js/main.js"></script>
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/globel.css">
 	<link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="css/video/video.css">
+	<link rel="stylesheet" type="text/css" href="css/download/download.css">
+	<link rel="stylesheet" type="text/css" href="css/vjs-mycss.css">
 </head>
-<body>
+<body onselectstart="return false;">
+	<div id="ch-tc-background">
+		<div id="tc">
+			<span id="close">&times;</span>
+			<h3>修改密码</h3>
+			<input type="text" placeholder="请输入旧密码" /><br/>
+			<input type="password" placeholder="请输入新密码" /><br/>
+			<input type="password" placeholder="请确认新密码" /><br/>
+			<button>提交</button>
+		</div>
+	</div>
 	<!-- 头栏 -->
 	<header id="header">
 		<!-- 左边模块 -->
-		<span><i id="mod" style="font-size:25px;" class="fa fa-bars module" aria-hidden="true"></i></span>
+		<span>
+			<i id="mod" style="font-size:25px;" class="fa fa-bars module" aria-hidden="true"></i>
+		</span>
+		<a style="color: white;position: absolute;top: 12px;left: 50px;">监听监看回放系统</a>
 		<!-- 右边模块 -->
 		<div id="log-info">
 			<ul>
-				<li id="admin">管理界面</li>
-				<li id="exit">退出登录</li>
+				<li onclick="window.location.href='./admin.html'">管理界面</li>
+				<li id="chpass">修改密码</li>
+				<li onclick="window.location.href='./index.html'">退出登录</li>
 			</ul>
 		</div>
 	</header>
@@ -29,44 +50,49 @@
 		<!-- 卫视导航 -->
 		<div class="leader">
 			<!-- 卫视列表 -->
-			<ul>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
-				<li><div class="t_logo"></div><span>浙江卫视</span></li>
+			<ul id="TVList" style="padding-right: 12px;">
+				<li style="text-align: center;height: 30px;line-height: 30px;">
+					<span>频道列表</span>
+				</li>
+				<!-- <li id="123" onclick="change_TV(currentType,'live','rtmp://live.hkstv.hk.lxdns.com/live/hks')">
+					<div class="tv_logo"></div>
+					<span>香港卫视</span>
+				</li>
+				<li id="456" onclick="change_TV(currentType,'live','rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp')">
+					<div class="tv_logo"></div>
+					<span>GOODTV</span>
+				</li>
+				<li id="789" onclick="change_TV(currentType,'live','rtmp://10.20.40.10/live/zjwshd')">
+					<div class="tv_logo"></div>
+					<span>浙江卫视</span>
+				</li> -->
+			</ul>
+			<ul id="FMList" style="height: 100%;border-left: 1px solid #4e4e4e;">
+				<li style="text-align: center;height: 30px;line-height: 30px;">
+					<span>电台列表</span>
+				</li>
+				<!-- <li id="fm11" >
+					<div class="fm_logo"></div>
+					<span>浙江卫视</span>
+				</li> -->
 			</ul>
 		</div>
 		<!-- 视频 -->
 		<div id="background"></div>
 		<div class="view">
 			<!-- 视频观看 -->
-			<div class="viewer"></div>
+			<div class="viewer" id="view">
+				<video id="myvideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-mycss">
+					<source src="rtmp://10.20.40.10/live/zjwshd" type="rtmp/flv">
+				</video>
+			</div>
 			<!-- 视频列表 -->
 			<div class="detail">
 				<!-- 日期 -->
 				<div id="date-control">
 					<div id="date"></div>
 				</div>
-				<button id="confirm">搜索</button>
+				<button id="confirm" onclick="freshList()">搜索</button>
 				<div class="select-date">
 					<div class="select-date-header">
 						<ul class="heade-ul">
@@ -76,23 +102,32 @@
 							<li class="header-item header-item-two" onselectstart="return false">
 								<select name="" id="monthList"></select>
 							</li>
-							<li class="header-item header-item-three" onselectstart="return false" >
+							<li class="header-item header-item-three" onselectstart="return false">
 								<span class="reback">回到今天</span>
 							</li>
 						</ul>
 					</div>
 					<div class="select-date-body">
 						<ul class="week-list">
-							<li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li>
+							<li>日</li>
+							<li>一</li>
+							<li>二</li>
+							<li>三</li>
+							<li>四</li>
+							<li>五</li>
+							<li>六</li>
 						</ul>
 						<ul class="day-tabel"></ul>
 					</div>
 				</div>
 				<!-- 日期结束 -->
 				<div id="con_list">
-					<ul>
-						<li>1231</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li>
-						<li>123</li><li>123</li><li>123</li><li>123</li><li>123</li><li>123</li>
+					<ul id="con_list_ul">
+						<!-- <li class="lookback">
+							<span>中国好声音</span>
+							<span class="protime">18:30:00-20:00:00</span>
+							<div id="1234">回看</div>
+						</li> -->
 					</ul>
 				</div>
 			</div>
@@ -100,3 +135,4 @@
 	</div>
 </body>
 </html>
+

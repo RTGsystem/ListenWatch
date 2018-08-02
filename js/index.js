@@ -1,32 +1,64 @@
-var sign = 2;
-
-function showPic(index) {
-	var focusImg = document.getElementById("focusImg");
-	var imgSrc = "img/pic";
-	imgSrc = imgSrc + index + ".jpg";
-	focusImg.src = imgSrc;
-	var lis = document.getElementsByClassName("focusBox")[0].getElementsByTagName("li");
-	for(var i = 0; i < lis.length; i++) {
-		lis[i].className = "";
-	}
-	lis[index - 1].className = "cur";
-}
-
-function setCurrentPic() {
-	showPic(sign);
-	sign++;
-	if(sign == 5) {
-		sign = 1;
-	}
-}
-
-window.onload = function() {
-	showPic(1);
+const ip = 'http://192.168.124.220:8080';
+window.onresize = window.onload = function() {
 	var submitButton = document.getElementById('SubmitButton');
-	submitButton.onclick = function (){
-		console.log(1);
-		window.location.href = './main.html';
+	var username = document.getElementById('username');
+	var password = document.getElementById('pwd');
+	var check = document.getElementById('RememberCheck1');
+	$("#a0").css("width", $(window).width());
+	$("#a0").css("height", $(window).height());
+	$("#a1").css("width", $(window).width());
+	$("#a1").css("height", $(window).height());
+	$("#a2").css("width", $(window).width());
+	$("#a2").css("height", $(window).height());
+	$("#a3").css("width", $(window).width());
+	$("#a3").css("height", $(window).height());
+	submitButton.onclick = function() {
+		var isadmin = check.checked == true ? 0 : 1;
+		$.ajax({
+			url: ip + '/user/login',
+			type: 'post',
+			dataType: 'JSON',
+			data: {
+				userid: username.value,
+				password: password.value,
+				identity: isadmin
+			},
+			success: function(res){
+				if (res.resultCode == 100) {
+					window.location.href = './main.html';
+				}else{
+					alert("您输入的账号密码有误");
+				}
+			},
+			error: function(err){
+				console.log("网络请求失败" + err);
+			}
+		});
 	}
 }
 
-window.setInterval("setCurrentPic()", 2200);
+// var i = 0;
+// var c;
+
+// function a() {
+
+// 	c = i % 4;
+// 	var d = (c + 1) % 4;
+// 	var e = document.getElementById("a" + c).opacity
+// 	//var d = (i + 1) % 5;
+
+// 	$("#a" + d).animate({
+// 		opacity: "1"
+// 	}, 2000)
+
+// 	console.log(i);
+// 	i++;
+// }
+
+// function b() {
+// 	$("#a" + c).animate({
+// 		opacity: "0"
+// 	}, 2000)
+// }
+// var r = self.setInterval("a()", 4000);
+// var rr = self.setInterval("b()", 4000);

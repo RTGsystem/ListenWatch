@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>监听监看回放系统</title>
+		<script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
 		<link rel="stylesheet" href="css/globel.css">
 		<link rel="stylesheet" href="css/index.css">
 		<script type="text/javascript" src="js/index.js"></script>
@@ -16,72 +17,35 @@
 					<!-- <img src="img/JTJK.png" id="jtjk"> -->
 				</span>
 			</div>
-			<td align="center" valign="top">
-				<img src="img/pic2.jpg" id="focusImg" />
-				<ul class="focusBox">
-					<li onclick="showPic(1);"></li>
-					<li onclick="showPic(2);"></li>
-					<li onclick="showPic(3);"></li>
-					<li onclick="showPic(4);"></li>
-				</ul>
-				<div id="main"></div>
-				<!-- <div id="login">
-					<p id="text">请登录</p>
-					<form>
-						<tr><input type="text" id="name" /></tr>
-						<tr><input type="password" id="pwd" /></tr>
-						<tr>
-							<td><input type="checkbox" id="autologin">
-								<a id="text2">
-							</td>
-							<td>下次自动登录</a>
-							</td>
-						</tr>
-
-						<tr>
-							<div id="login2">登陆</div>
-						</tr>
-						<tr>
-							<p id="text3">
-								<a href="#" id="text5">忘记密码？</a>
-							</p>
-						</tr>
-					</form>
-				</div> -->
-				<div class="login-body" id="LoginBody">
-					<div class="pass-form" id="PassForm" method="POST">
-						<!--登录框头部-->
-						<p class="pass-form-login">账号密码登录</p>
-						<!--登录框的两个输入-->
-						<input type="text" name="username" class="username-input pass-text-input" value placeholder="用户名/手机号码">
-						<input type="password" name="password" class="password-input pass-text-input" value placeholder="密码">
-						<!--登录框下方的选择框-->
-						<p class="checkbox-item">
-							<input id="RememberCheck" type="radio" name="pass-remember-box" class="checkbox-item" checked="checked">
-							<label>员工</label>
-							<input id="RememberCheck" type="radio" name="pass-remember-box" class="checkbox-item" >
-							<label>管理员</label>
-							<!-- <label for="RememberCheck" class="remember-label" id="RemberLabel">下次自动登录</label> -->
-						</p>
-						<!--忘记密码-->
-						<!-- <input id="SubmitButton" class="submit-button" type="submit" name="pass-submit-button" value="登录"> -->
-						<div id="SubmitButton" class="submit-button">登录</div>
-					</div>
-					<!--忘记密码链接没有写入-->
-					<p class="forget-item">
-						<a class="forgot-link" href="">忘记密码</a>
-						<a class="feedback">问题反馈</a>
+			<div id="a0"></div>
+			<div id="a1"></div>
+			<div id="a2"></div>
+			<div id="a3"></div>
+			<div class="login-body" id="LoginBody">
+				<div class="pass-form" id="PassForm" method="POST">
+					<!--登录框头部-->
+					<p class="pass-form-login">账号密码登录</p>
+					<!--登录框的两个输入-->
+					<input id="username" type="text" name="username" class="username-input pass-text-input" value placeholder="用户名/手机号码">
+					<input id="pwd" type="password" name="password" class="password-input pass-text-input" value placeholder="密码">
+					<!--登录框下方的选择框-->
+					<p class="checkbox-item">
+						<input id="RememberCheck1" type="radio" name="pass-remember-box" class="checkbox-item" checked="checked">
+						<label>员工</label>
+						<input id="RememberCheck2" type="radio" name="pass-remember-box" class="checkbox-item">
+						<label>管理员</label>
+						<!-- <label for="RememberCheck" class="remember-label" id="RemberLabel">下次自动登录</label> -->
 					</p>
+					<!--忘记密码-->
+					<!-- <input id="SubmitButton" class="submit-button" type="submit" name="pass-submit-button" value="登录"> -->
+					<div id="SubmitButton" class="submit-button">登录</div>
 				</div>
+				<!--忘记密码链接没有写入-->
+				<p class="forget-item">
+					<a class="forgot-link" href="">忘记密码</a>
+					<a class="feedback">问题反馈</a>
+				</p>
 			</div>
-		</td>
-		</div>
-		<div id="footer">
-			<div id="footmain"></div>
-			<span><img src="img/fpic04.jpg" id="fic04" /></span>
-			<span><img src="img/fpic01.png" id="fic01"/> </span>
-			<span><img src="img/fpic02.png" id="fic02"/></span>
-			<span><img src="img/fpic03.png" id="fic03"/> </span>
 		</div>
 	</body>
 </html>

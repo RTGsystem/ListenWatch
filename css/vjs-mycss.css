@@ -1,0 +1,12 @@
+.vjs-mycss.video-js {
+}
+
+/* Change the border of the big play button. */
+.vjs-mycss .vjs-big-play-button {
+}
+
+/* Change the color of various "bars". */
+.vjs-mycss .vjs-volume-level,
+.vjs-mycss .vjs-play-progress,
+.vjs-mycss .vjs-slider-bar {
+}

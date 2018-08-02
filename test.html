@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery/jquery-3.2.1.min.js"></script>
+	<script>
+		window.onload = function (){
+			$.ajax({
+				url: './playback/user/login',
+				type: 'post',
+				dataType: 'JSON',
+				data: {
+					'userid': '123456',
+					'password': '665444'
+				},
+				success: function(res){
+					console.log(res);
+				},
+				error: function(err){
+					console.log(err);
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
