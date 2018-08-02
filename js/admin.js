@@ -458,6 +458,9 @@ function checkCancel() {
         });
 }
 function checkSave(){
+    function parse(boolean){
+        return boolean == true ? 1 : 0;
+    }
     var list = document.getElementById('list');
     var arr = [];
     var ul_arr = list.children;
@@ -465,13 +468,15 @@ function checkSave(){
         var json = {};
         var li = ul_arr[i].children;
         json['userid'] = li[0].innerHTML;
-        json['formview'] = li[3].children[0].checked;
-        json['downloadFM'] = li[4].children[0].checked;
-        json['downloadTV'] = li[5].children[0].checked;
-        json['watchTV'] = li[6].children[0].checked;
-        json['watchFM'] = li[7].children[0].checked;
+        json['formpurview'] = parse(li[3].children[0].checked);
+        json['fmdownload'] = parse(li[4].children[0].checked);
+        json['tvdownload'] = parse(li[5].children[0].checked);
+        json['tvpurview'] = parse(li[6].children[0].checked);
+        json['fmpurview'] = parse(li[7].children[0].checked);
+        json['fmpurview'] = 1;
         arr.push(json);
     }
+    console.log(arr);
     $.ajax({
         url: ip + '/user/updatePermission',
         type: 'post',
@@ -621,7 +626,7 @@ function yadd(){
 // 添加频道结束2.1
 // 信息源列表开始2.2
 function delete_ul_2_2(ev) {
-    let deleteConfirm = confirm(`确定要删除频道${ev.target.parentNode.parentNode.firstElementChild.nextElementSibling.innerHTML}吗?`);
+    let deleteConfirm = confirm(`确定要删除频道${$(ev.target.parentNode.parentNode).attr('channelid')}吗?`);
     if(deleteConfirm === true){
         //请求数据库删除该用户
         $.ajax({
@@ -629,8 +634,8 @@ function delete_ul_2_2(ev) {
             type: 'post',
             dataType: 'JSON',
             data: {
-                channelid: ev.target.parentNode.parentNode.channelid,
-                type: ev.target.parentNode.parentNode.firstElementChild.nextElementSibling.innerHTML
+                channelid: $(ev.target.parentNode.parentNode).attr('channelid'),
+                type: ev.target.parentNode.parentNode.firstElementChild.nextElementSibling.innerHTML == 'TV' ? 0 : 1
             },
             success: function(res){
                 if (res.resultCode == 100) {
