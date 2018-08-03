@@ -262,7 +262,7 @@ function addsuccess(){
                 formpurview: check($('#checkbox3').is(':checked')),
                 tvpurview: check($('#checkbox4').is(':checked')),
                 fmpurview: check($('#checkbox5').is(':checked')),
-                identity: 1
+                identity: check($('#Check2').is(':checked'))
             },
             success: function(res){
                 if (res.resultCode == 100) {
