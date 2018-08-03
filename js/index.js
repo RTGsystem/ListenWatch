@@ -13,30 +13,37 @@ window.onresize = window.onload = function() {
 	$("#a3").css("width", $(window).width());
 	$("#a3").css("height", $(window).height());
 	submitButton.onclick = function() {
-		var isadmin = check.checked == true ? 0 : 1;
-		$.ajax({
-			url: ip + '/user/login',
-			type: 'post',
-			dataType: 'JSON',
-			data: {
-				userid: username.value,
-				password: password.value,
-				identity: isadmin
-			},
-			success: function(res){
-				if (res.resultCode == 100) {
-					window.location.href = './main.html';
-				}else{
-					alert("您输入的账号密码有误");
+		if(username.value == ''||password.value == ''){
+			alert('您的输入不完整！');
+		}else{
+			var isadmin = check.checked == true ? 0 : 1;
+			$.ajax({
+				url: ip + '/user/userLogin',
+				type: 'post',
+				dataType: 'JSON',
+				data: {
+					userid: username.value,
+					password: password.value,
+					identity: isadmin
+				},
+				success: function(res){
+					if (res.resultCode == 100) {
+						window.location.href = './main.html';
+					}else{
+						alert("您输入的账号密码有误");
+					}
+				},
+				error: function(err){
+					console.log("网络请求失败" + err);
 				}
-			},
-			error: function(err){
-				console.log("网络请求失败" + err);
-			}
-		});
+			});
+		}
 	}
+	
 }
-
+function forget(){
+	alert('请联系后台！');
+}
 // var i = 0;
 // var c;
 

@@ -35,6 +35,7 @@ $(function(){
                         $('#content1_2').append(content);
                     }
                 }else{
+                    $('#content1_2').empty();
                     alert(res.resultMessage);
                 }
             },
@@ -88,6 +89,7 @@ $(function(){
                         $('#list').append(content);
                     }
                 }else{
+                    $('#list').empty();
                     alert(res.resultMessage);
                 }
             },
@@ -140,6 +142,7 @@ $(function(){
                         $('#content2_2').append(content);
                     }
                 }else{
+                    $('#content2_2').empty();
                     alert(res.resultMessage);
                 }
             },
@@ -253,7 +256,7 @@ function addsuccess(){
                 username: $('#input1-1_1').val(),
                 userid: $('#input2-1_1').val(),
                 department: $('#select1-1_1').find("option:selected").text(),
-                password: $('#input2-1_1').val(),
+                password: $('#input3-1_1').val(),
                 tvdownload: check($('#checkbox1').is(':checked')),
                 fmdownload: check($('#checkbox2').is(':checked')),
                 formpurview: check($('#checkbox3').is(':checked')),
@@ -338,7 +341,7 @@ function toggle_button_revise(ev){
         });
     }else{
         $target.text('保存');
-        $target.parent().prev().replaceWith('<input type = "text" class="yr_input" value='+$target.parent().prev().text()+'>');
+        $target.parent().prev().replaceWith('<input type="text" class="yr_input" value='+$target.parent().prev().text()+'>');
         $target.parent().prev().prev().replaceWith('<input type = "text" class="yr_input" value='+$target.parent().prev().prev().text()+'>');
         $target.parent().parent().css("background-color","#ccc").children().css("background-color","#ccc");
     }
@@ -354,8 +357,13 @@ function selectUsers(){
     }else if (val == '用户名') {
         url = '/user/getUserByUserId';
         key = 'userid';
+        if(!(/(^[1-9]\d*$)/.test(key))||key.length>=10){
+            $('#content1_2').empty();
+            alert('没有查询到该用户');
+            return false;
+        }
     }else if(val == '姓名'){
-        url = '/user/getUserRealByUsername';
+        url = '/user/getUserByUsername';
         key = 'username';
     }else if(val == '所属部门'){
         url = '/user/getUserByDept';
@@ -388,6 +396,7 @@ function selectUsers(){
                     $('#content1_2').append(content);
                 }
             }else{
+                $('#content1_2').empty();
                 alert(res.resultMessage);
             }
         },
@@ -449,6 +458,7 @@ function checkCancel() {
                         $('#list').append(content);
                     }
                 }else{
+                    $('#list').empty();
                     alert(res.resultMessage);
                 }
             },
@@ -468,20 +478,19 @@ function checkSave(){
         var json = {};
         var li = ul_arr[i].children;
         json['userid'] = li[0].innerHTML;
-        json['formpurview'] = parse(li[3].children[0].checked);
-        json['fmdownload'] = parse(li[4].children[0].checked);
-        json['tvdownload'] = parse(li[5].children[0].checked);
-        json['tvpurview'] = parse(li[6].children[0].checked);
-        json['fmpurview'] = parse(li[7].children[0].checked);
-        json['fmpurview'] = 1;
+        json['tvpurview'] = parse(li[3].children[0].checked);
+        json['tvdownload'] = parse(li[4].children[0].checked);
+        json['fmpurview'] = parse(li[5].children[0].checked);
+        json['fmdownload'] = parse(li[6].children[0].checked);
+        json['formpurview'] = parse(li[7].children[0].checked);
         arr.push(json);
     }
-    console.log(arr);
     $.ajax({
         url: ip + '/user/updatePermission',
         type: 'post',
         dataType: 'JSON',
         data: JSON.stringify(arr),
+        contentType : 'application/json;charset=UTF-8',
         success: function(res){
             if (res.resultCode == 100) {
                 alert('权限修改成功！');
@@ -505,8 +514,13 @@ function selectUsers2(){
     }else if (val == '用户名') {
         url = '/user/getUserByUserId';
         key = 'userid';
+        if(!(/(^[1-9]\d*$)/.test(key))||key.length>=10){
+            $('#content1_2').empty();
+            alert('没有查询到该用户');
+            return false;
+        }
     }else if(val == '姓名'){
-        url = '/user/getUserRealByUsername';
+        url = '/user/getUserByUsername';
         key = 'username';
     }else if(val == '所属部门'){
         url = '/user/getUserByDept';
@@ -553,6 +567,7 @@ function selectUsers2(){
                     $('#list').append(content);
                 }
             }else{
+                $('#list').empty();
                 alert(res.resultMessage);
             }
         },
@@ -595,11 +610,10 @@ function yadd(){
             let radio = $('#yradio1').is(':checked') ? 0 : 1;
             let fd = new FormData();
             fd.append('url', $('#yinput2').val());
-            fd.append('type', radio);
+            fd.append('type1', radio);
             fd.append('channelname', $('#yinput1').val());
-            fd.append('icon', $('#yfile1')[0].files[0]);
+            fd.append('iconfile', $('#yfile1')[0].files[0]);
             fd.append('saveday', $('#yinput3').val());
-            console.log(fd);
             $.ajax({
                 url: ip + '/user/addChannel',
                 type: 'post',
@@ -626,11 +640,11 @@ function yadd(){
 // 添加频道结束2.1
 // 信息源列表开始2.2
 function delete_ul_2_2(ev) {
-    let deleteConfirm = confirm(`确定要删除频道${$(ev.target.parentNode.parentNode).attr('channelid')}吗?`);
+    let deleteConfirm = confirm(`确定要删除频道${ev.target.parentNode.parentNode.firstElementChild.innerHTML}吗?`);
     if(deleteConfirm === true){
         //请求数据库删除该用户
         $.ajax({
-            url: ip + '/user/deleChannel',
+            url: ip + '/user/delChannel',
             type: 'post',
             dataType: 'JSON',
             data: {
@@ -639,7 +653,7 @@ function delete_ul_2_2(ev) {
             },
             success: function(res){
                 if (res.resultCode == 100) {
-                    alert('用户删除成功');
+                    alert('信息源删除成功');
                 }else{
                     alert(res.resultMessage);
                 }
@@ -658,15 +672,26 @@ function toggle_button_revise_2_2(ev){
     let $targetText = $(ev.target).text();
     if($targetText === "保存"){
         //请求保存并提示保存成功与否
-        $target.text('修改');
         let t1 = $target.parent().parent().attr('channelid');
         let t2 = $target.parent().prev().prev().prev().prev().val();
-        let t3 = $target.parent().prev().prev().prev().val() == 'TV' ? 0 : 1;
+        let t3 = $target.parent().prev().prev().prev().val();
+        if(t3=='TV'||t3=='tv'){
+            t3=0;
+        }else if(t3=='FM'||t3=='fm'){
+            t3=1;
+        }else{
+            alert('修改类型应为TV或FM');
+            return false;
+        }
         let t4 = $target.parent().prev().prev().val();
         let t5 = $target.parent().prev().val();
+        if(!(/(^[1-9]\d*$)/.test(t5))||t5.length>=10){
+            alert('修改类型应为数字');
+            return false;
+        }
         $target.parent().prev().replaceWith('<li class="screen-1-li right-border" style="width: 15%">'+$target.parent().prev().val()+'</li>');
         $target.parent().prev().prev().replaceWith('<li class="screen-1-li right-border" style="width: 30%">'+$target.parent().prev().prev().val()+'</li>');
-        $target.parent().prev().prev().prev().replaceWith('<li class="screen-1-li right-border" style="width: 15%">'+$target.parent().prev().prev().prev().val()+'</li>');
+        $target.parent().prev().prev().prev().replaceWith('<li class="screen-1-li right-border" style="width: 15%">'+$target.parent().prev().prev().prev().val().toUpperCase()+'</li>');
         $target.parent().prev().prev().prev().prev().replaceWith('<li class="screen-1-li right-border" style="width: 20%">'+$target.parent().prev().prev().prev().prev().val()+'</li>');
         $target.parent().parent().css("background-color","#fff").children().css("background-color","#fff");
         $.ajax({
@@ -683,6 +708,7 @@ function toggle_button_revise_2_2(ev){
             }, 
             success: function(res){
                 if (res.resultCode == 100) {
+                    $target.text('修改');
                     alert('信息源信息修改成功');
                 }else{
                     alert(res.resultMessage);
@@ -714,19 +740,24 @@ function selectUsers_2_2(){
         key = 'channelname';
     }else if(val == '信息源类型'){
         url = '/user/getChannelByType';
-        key = 'type';
+        key = 'type1';
+        if(!(/(^[1-9]\d*$)/.test(key))||key.length>=10){
+            if(value=='TV'||value=='tv'){
+                value=0;
+            }else if(value=='FM'||value=='fm'){
+                value=1;
+            }else{
+                $('#content1_2').empty();
+                alert('没有查询到该类型');
+                return false;
+            }
+        }
     }else{
         url = '';
         key = '';
     }
     let json = {};
-    if(value=='TV'||value=='tv'){
-        value=0;
-    }else if(value=='FM'||value=='tv'){
-        value=1;
-    }else{
-        value=value;
-    }
+    
     json[key] = value;
     $.ajax({
         url: ip + url,
@@ -754,6 +785,7 @@ function selectUsers_2_2(){
                     $('#content2_2').append(content);
                 }
             }else{
+                $('#content2_2').empty();
                 alert(res.resultMessage);
             }
         },

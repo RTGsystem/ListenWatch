@@ -221,6 +221,7 @@ body {
 }
 
 .forgot-link {
+	cursor: pointer;
 	position: relative;
 	left: 1%;
 	color: #1689cc;

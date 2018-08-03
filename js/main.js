@@ -1,6 +1,11 @@
 const ip = 'http://192.168.124.220:8080';
-var playType = 1;//初始化播放的是电视
-var playChannelId;//正在播放的视频的id
+var playType= 0;
+var playChannelId = 1;
+var playChannelName = '浙江卫视';
+var playProId='';
+var currentType = 'TV';
+var currentMethod = 'live';
+var url = '';
 window.onresize =  window.onload = function (){
 	var content = document.getElementById('content');
 	var header = document.getElementById('header');
@@ -48,20 +53,14 @@ window.onresize =  window.onload = function (){
 	detail[0].style.height = viewer[0].offsetHeight + 'px';
 	conList.style.height = viewer[0].offsetHeight - 145 + 'px';
 	viewer[0].style.width = document.documentElement.clientWidth - 425 + 'px';
+	var fmlist = document.getElementById('FMList');
+	var tvlist = document.getElementById('TVList');
+	fmlist.style.height = tvlist.offsetHeight > fmlist.offsetHeight ? tvlist.offsetHeight : fmlist.offsetHeight + 'px';
 	// 函数调用
 	select();
-	player_live();
-	getTime();
-	//页面加载时显示浙江卫视直播页面
-	var dateSearch = $('#date').text();
-	var playType = 1;
-	var playChannelId = '12';//CCTV1卫视频道ID
-	console.log(dateSearch);
-	getProgramList();
-	//页面加载时获取频道列表
-	getChannelList(1);
-	getChannelList(2);
-}
+	//getTime();
+};
+init();//初始化
 // 移动封装
 var timer = null;//时间对象 
 var alpha = 0;//透明度初始值
@@ -292,8 +291,16 @@ function select(){
 	});
 }
 function getSelectDate(result){
-	//这里获取选择的日期
-	//console.log(result);
+	var dateSearch = getTrueDate(result);
+	proListForDate(dateSearch);
+}
+///////////////////////////////////未完待续
+function getTrueDate(result){
+	if(result.length === 8){
+		return dateSearch = result.substring(0,5)+'0'+result.charAt(5)+result.charAt(6)+'0'+result.charAt(7);
+	}else if(result.length === 9){
+		return false;
+	}
 }
 // 获取当前时间
 var beforeDate = false;
@@ -315,47 +322,70 @@ function getTime(){
 		beforeDate=true;
 	}
 }
-//获取节目单数据
-function getProgramList(){
-	var dateSearch=$('#date').text();
+
+//获取直播地址
+function getChannelURL(playType,playChannelId){
 	$.ajax({
-		url: ip + '/trunk/getProgramList',
+		url: ip+ '/channel/getChannelUrl',
 		type: 'post',
-		datatype: 'JSON',
+		dataType: 'JSON',
+		async:false,
 		data: {
-			'type': playType,
-			'channelId': playChannelId,//来自左侧导航栏点击事件
-			'date':dateSearch
+			'type1': playType,
+			'channelid': playChannelId
 		},
 		success: function(res){
-			if(res.resultCode==100){
-				var programlList=res.resultData;
-				var $proList=$('#con_list').find('ul');
-				var programlListLen=programlList.length;
-				for(var i=0;i<programlListLen;i++){
-					var programId=programlList.proId,
-						programName=programlList.proName,
-						startTime=programlList.startTime,
-						endTime=programlList.endTime;
-					if(beforeDate==true){//小于当天，则节目单每行都加上回看按钮
-						var proNews='<li class="lookback"><span>'+programName+'</span><span  class="protime">'+startTime+'-'+endTime+'</span><div id="'+programId+'">回看</div></li>';
-						$proList.append(proNews);
+			if(res.resultCode === 100) {
+				url = res.resultData.resultData;
+			}
+		},
+		error: function(err){
+			console.log(err);
+		}
+	})
+}
+//获取节目单数据
+function getProgramList(playType,playChannelName,dateSearch){
+	$.ajax({
+		url: ip + '/program/getProgramList',
+		type: 'post',
+		dataType: 'JSON',
+		async:false,
+		data: {
+			'type1': playType,
+			'channelname': playChannelName,
+			'prodate': dateSearch
+		},
+		success: function(res){
+			if(res.resultCode===100){
+				var proid,prourl,proname,prostart,proend;
+				var proList = res.resultData.resultData;
+				for(var i=0;i<proList.length;i++){
+					proid = proList[i].proid;
+					prourl = proList[i].defaulturl;
+					proname = proList[i].proname;
+					prostart = proList[i].start.substring(0,5);
+					proend = proList[i].end.substring(0,5);
+					if(beforeDate===true){//小于当天，则节目单每行都加上回看按钮
+						var proNews='<li data-id="'+proid+'" class="proli"><span class="proname">'+proname+'</span><span  class="protime">'+prostart+'-'+proend+'</span><div class="static">回放</div></li>';
+						$('#con_list_ul').append(proNews);
 					}else{
-						if(nowTime>startTime&&nowTime<startTime){//当前直播
-							var proNews='<li class="active"><span>'+programName+'</span><span  class="protime">'+startTime+'-'+endTime+'</span><div>直播</div></li>';
-							$proList.append(proNews);
-						}else if(nowTime<startTime){//今日已播
-							var proNews='<li class="lookback"><span>'+programName+'</span><span  class="protime">'+startTime+'-'+endTime+'</span><div id="'+programId+'">回看</div></li>';
-							$proList.append(proNews);
-						}else{//
-							var proNews='<li class="disabled"><span>'+programName+'</span><span  class="protime">'+startTime+'-'+endTime+'</span></li>';
-							$proList.append(proNews);
+						if(nowTime>prostart&&nowTime<proend){//当前直播
+							var proNews='<li data-id="'+proid+'" class="proli"><span class="proname">'+proname+'</span><span  class="protime">'+prostart+'-'+proend+'</span><div class="live">直播</div></li>';
+							$('#con_list_ul').append(proNews);
+						}else if(nowTime<prostart){//今日已播
+							var proNews='<li data-id="'+proid+'" class="proli"><span class="proname">'+proname+'</span><span  class="protime">'+prostart+'-'+proend+'</span><div class="static">回放</div></li>';
+							$('#con_list_ul').append(proNews);
+						}else{
+							var proNews='<li data-id="'+proid+'" class="proli"><span class="proname">'+proname+'</span><span  class="protime">'+prostart+'-'+proend+'</span><div class="unplay">未播</div></li>';
+							$('#con_list_ul').append(proNews);
 						}
 					}
-					var proNews='<li id="'+programId+'"><span>'+programName+'</span><span  class="protime">'+startTime+'-'+endTime+'</span></li>';
-					$proList.append(proNews);
-				}
+				}	
 			}
+			$('#con_list_ul li div').on('click',function(){
+				selectPro(event);
+			})
 		},
 		error: function(err){
 			console.log('网络请求失败');
@@ -365,85 +395,64 @@ function getProgramList(){
 //获取左侧频道导航列表
 function getChannelList(type){
 	$.ajax({
-		url: ip + '/trunk/getChannelList',
+		url: ip + '/channel/getChannelList',
 		type: 'post',
-		datatype: 'JSON',
+		dataType: 'JSON',
 		data: {
-			'type': type
+			'type1': type
 		},
 		success: function(res){
-			if(res.resultCode==100){
-				var channelList=res.resultData;
+			if(res.resultCode===100){
+				var channelList=res.resultData.resultData;
 				var channelListLen=channelList.length;
-				var $TVList=$('#TVlist').find('ul');
-				var $FMList=$('#FMlist').find('ul');
 				for(var j=0;j<channelListLen;j++){//按左右添加TV列表和FM列表
-					if(type==1){
-						var channelId=channelList.channelId,
-							channelName=channelList.channelName,
-							channelIcon=channelList.channelIcon;
-						var TVNews='<li id="'+channelId+'"><div class="tv_logo">'+$(".tv_logo").css("background-iamge","url(channelIcon)") +'</div><span>'+channelName+'</span></li>';
-						$TVList.append(TVNews);
+					var channelId=channelList[j].channelid,
+							channelName=channelList[j].channelname;
+							channelIcon=channelList[j].icon;
+					if(type===0){
+						var TVNews=`<li data-id="`+channelId+`">
+							<div data-id="`+channelId+`" class="tv_logo" style="background-img:url(`+channelIcon+`)"></div>
+							<span data-id="`+channelId+`">`+channelName+`</span>
+						</li>`;
+						$('#TVList').append(TVNews);
 					}
-					else if(type==2){
-						var channelId=channelList.channelId,
-							channelName=channelList.channelName,
-							channelIcon=channelList.channelIcon;
-						var FMNews='<li id="'+channelId+'"><div class="fm_logo">'+$(".fm_logo").css("background-iamge","url(channelIcon)") +'</div><span>'+channelName+'</span></li>';
-						$FMList.append(FMNews);
+					else if(type===1){
+						var FMNews=`<li data-id="`+channelId+`">
+							<div data-id="`+channelId+`" class="fm_logo" style="background-img:url(`+channelIcon+`)"></div>
+							<span data-id="`+channelId+`">`+channelName+`</span>
+						</li>`;
+						$('#FMList').append(FMNews);
 					}
 				}
-			}
+			}	
+			$('.leader ul li').on('click',function(event){
+				event.stopPropagation();
+				selectChannel(event);
+			});
 		},
 		error: function(err){
 			console.log('网络请求失败');
 		}
 	});
 }
-//点击导航栏图标，返回channelId和type，刷新节目单
-$("#TVList").on("click","li",function(){
-	var dateSearch=$('#date').text();
-	playType=1;//单击事件change_TV执行时返回播放type=1（电视）
-	playChannelId=$(this).attr("ID");
-	console.log(playType);
-	console.log(playChannelId);
-	getProgramList();
-});
-$("#FMList").on("click","li",function(){
-	var dateSearch=$('#date').text();
-	playType=2;
-	playChannelId=$(this).attr("ID");
-	console.log(playType);
-	console.log(playChannelId);
-	getProgramList();
-});
-function freshList(){
-	var dateSearch = $('#date').text();
-	console.log(dateSearch);
-	$("#con_list_ul").empty();//清空节目单，再重新加载选中的日期的节目单
-	getTime();
-	getProgramList();
-};
-$(".lookback").on("click","div",function(){
-	var proId = $(this).attr("id");
-	var type = playType;
-	var date = $('#date').text();
+//获取点播节目URL
+function getProgramUrl(playType,playProId,dateSearch){
 	$.ajax({
-		url: ip + '/trunk/getChannelURL',
+		url: ip+ '/program/getProgramUrl',
 		type: 'post',
-		datatype: 'JSON',
+		dataType: 'JSON',
 		data: {
-			'type': type,
-			'proId':proId,
-			'date':date
+			'type1': playType,
+			'proId': playProId,
+			'data': dateSearch
 		},
 		success: function(res){
-			if(res.resultCode==100){
-				var lookbackURL=resultData.url;//将这个url返回给播放器播放
+			if(res.resultCode===100){
+				url = res.resultData.url;
 			}
 		},
 		error: function(err){
 			console.log('网络请求失败');
 		}
-	});
-});
+	})
+}

@@ -1,12 +1,32 @@
-.vjs-mycss.video-js {
+.vjs-mycss .vjs-controlBar {
+	opacity: 0.5;
 }
-
-/* Change the border of the big play button. */
-.vjs-mycss .vjs-big-play-button {
+/*中间大按钮*/
+.vjs-mycss .vjs-control-bar{
 }
-
-/* Change the color of various "bars". */
-.vjs-mycss .vjs-volume-level,
-.vjs-mycss .vjs-play-progress,
-.vjs-mycss .vjs-slider-bar {
+.vjs-mycss .vjs-big-play-button:hover {
+}
+/*底部播放暂停按钮*/
+.vjs-mycss .vjs-play-control {
+}
+.vjs-mycss .vjs-play-control:hover {
+}
+/*底部开始时间*/
+.vjs-mycss .vjs-current-time {
+	display: inline-block;
+	padding: 0;
+}
+/*底部总时间*/
+.vjs-mycss .vjs-duration {
+	display: inline;
+	padding-left: 0;
+}
+/*底部剩余时间*/
+.vjs-mycss .vjs-remaining-time {
+	display: none;
+}
+/*中间控件*/
+.vjs-mycss .vjs-time-divider {
+	display: inline;
+	margin-top: -1px;
 }

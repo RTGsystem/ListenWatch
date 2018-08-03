@@ -10,7 +10,7 @@
 	<script src="js/video/video.js"></script>
 	<script src="js/download/download.js"></script>
 	<script src="js/myVideo.js"></script>
-	<script src="js/main.js"></script>
+	<script src="js/main-fn.js"></script>
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/globel.css">
 	<link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -48,33 +48,17 @@
 	<!-- 内容 -->
 	<div id="content">
 		<!-- 卫视导航 -->
-		<div class="leader">
+		<div class="leader" style="overflow-y: scroll;">
 			<!-- 卫视列表 -->
 			<ul id="TVList" style="padding-right: 12px;">
 				<li style="text-align: center;height: 30px;line-height: 30px;">
 					<span>频道列表</span>
 				</li>
-				<!-- <li id="123" onclick="change_TV(currentType,'live','rtmp://live.hkstv.hk.lxdns.com/live/hks')">
-					<div class="tv_logo"></div>
-					<span>香港卫视</span>
-				</li>
-				<li id="456" onclick="change_TV(currentType,'live','rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp')">
-					<div class="tv_logo"></div>
-					<span>GOODTV</span>
-				</li>
-				<li id="789" onclick="change_TV(currentType,'live','rtmp://10.20.40.10/live/zjwshd')">
-					<div class="tv_logo"></div>
-					<span>浙江卫视</span>
-				</li> -->
 			</ul>
-			<ul id="FMList" style="height: 100%;border-left: 1px solid #4e4e4e;">
+			<ul id="FMList" style="border-left: 1px solid #4e4e4e;">
 				<li style="text-align: center;height: 30px;line-height: 30px;">
 					<span>电台列表</span>
 				</li>
-				<!-- <li id="fm11" >
-					<div class="fm_logo"></div>
-					<span>浙江卫视</span>
-				</li> -->
 			</ul>
 		</div>
 		<!-- 视频 -->
@@ -83,7 +67,8 @@
 			<!-- 视频观看 -->
 			<div class="viewer" id="view">
 				<video id="myvideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-mycss">
-					<source src="rtmp://10.20.40.10/live/zjwshd" type="rtmp/flv">
+					<source src='' type="rtmp/flv">
+					<!-- <source src="./media/02.mp4" type="video/mp4"> -->
 				</video>
 			</div>
 			<!-- 视频列表 -->
@@ -92,7 +77,7 @@
 				<div id="date-control">
 					<div id="date"></div>
 				</div>
-				<button id="confirm" onclick="freshList()">搜索</button>
+				<button id="confirm">搜索</button>
 				<div class="select-date">
 					<div class="select-date-header">
 						<ul class="heade-ul">
@@ -123,16 +108,12 @@
 				<!-- 日期结束 -->
 				<div id="con_list">
 					<ul id="con_list_ul">
-						<!-- <li class="lookback">
-							<span>中国好声音</span>
-							<span class="protime">18:30:00-20:00:00</span>
-							<div id="1234">回看</div>
-						</li> -->
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script src="js/main.js"></script>
 </body>
 </html>
 
