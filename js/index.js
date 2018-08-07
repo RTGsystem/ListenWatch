@@ -1,4 +1,4 @@
-const ip = 'http://192.168.124.220:8080';
+const ip = 'http://10.20.21.225:8080';
 window.onresize = window.onload = function() {
 	var submitButton = document.getElementById('SubmitButton');
 	var username = document.getElementById('username');
@@ -29,6 +29,7 @@ window.onresize = window.onload = function() {
 				success: function(res){
 					if (res.resultCode == 100) {
 						window.location.href = './main.html';
+						setCookie('userid', username.value, 1);
 					}else{
 						alert("您输入的账号密码有误");
 					}

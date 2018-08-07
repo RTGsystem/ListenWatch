@@ -1,15 +1,10 @@
 function init(){
-	getChannelList(0);
-	getChannelList(1);
 	var dateSearch = getNowDate();
-	getProgramList(0,playChannelName,'2018-08-02');
+	getProgramList(0,playChannelName,dateSearch);
 	getChannelURL(playType,playChannelId);
-	$('#view video source').attr('src',url);
-	player_live();
 }
 function selectChannel(ev){
-	var result = $('#date').text();
-	var dateSearch = getTrueDate(result);
+	var dateSearch = getNowDate();
 	if ($(ev.target).parent().parent().attr('id')==='TVList'){
 		playType = 0;
 		playChannelId = $(ev.target).attr('data-id');
@@ -28,26 +23,27 @@ function selectChannel(ev){
 	}
 }
 function proListForDate(dateSearch){
+	dateSearch = getTrueDate(dateSearch);
 	$('#con_list_ul').empty();
 	getProgramList(playType,playChannelName,dateSearch);
 }
 function selectPro(ev){
-	console.log('获取节目URL开始...');
 	if($(ev.target).attr('class')==='static'){
 		var dateSearch = $('#date').text();
+		dateSearch = getTrueDate(dateSearch);
 		playProId = $(ev.target).parent().attr('data-id');
 		getProgramUrl(playType,playProId,dateSearch);
-		if(playType ==='1'){
+		if(playType ===0){
 			changeSource(currentType,currentMethod,'TV','static',url);
-		}else if(playType === '2'){
+		}else if(playType ===1){
 			changeSource(currentType,currentMethod,'FM','static',url);
 		}
 	}else if($(ev.target).attr('class')==='live'){
 		getChannelURL(playType,playChannelId);
-		if(playType ==='1'){
-			changeSource(currentType,currentMethod,'TV','static',url);
-		}else if(playType === '2'){
-			changeSource(currentType,currentMethod,'FM','static',url);
+		if(playType ===0){
+			changeSource(currentType,currentMethod,'TV','live',url);
+		}else if(playType ===1){
+			changeSource(currentType,currentMethod,'FM','live',url);
 		}
 	}
 	else{
@@ -68,4 +64,16 @@ function getNowDate(){
 		day = now.getDate().toString();
 	}
 	return now.getFullYear().toString()+month+day;
+}
+function getDateBack(date){
+	if(date.charAt(5)==='0'){
+		 date = date.substring(0,5)+date.substring(6,10);
+		 if(date.charAt(date.length-2)==='0'){
+		 	date = date.substring(0,date.length-2)+date.substring(date.length-1,date.length);
+		 } 
+	}
+	if(date.charAt(date.length-2)==='0'){
+		 	date = date.substring(0,date.length-2)+date.substring(date.length-1,date.length);
+		 } 
+	return date;
 }

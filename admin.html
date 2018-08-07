@@ -5,6 +5,7 @@
 		<script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="js/admin.js"></script>
 		<script type="text/javascript" src="js/Chart.min.js"></script>
+		<script src="js/yjh_main.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/admin.css">
 		<link rel="stylesheet" href="font/iconfont.css" />
 		<link rel="stylesheet" href="css/globel.css">
@@ -141,10 +142,11 @@
 						</div>
 						<hr>
 						<ul class="screen-1-ul" style="border-top: 1px solid">
-							<li class="screen-1-li right-border" style="width: 20%">用户名</li>
-							<li class="screen-1-li right-border" style="width: 20%">姓名</li>
-							<li class="screen-1-li right-border" style="width: 20%">所属部门</li>
-							<li class="screen-1-li " style="width: 39%;">操作</li>
+							<li class="screen-1-li right-border" style="width: 15%">用户名</li>
+							<li class="screen-1-li right-border" style="width: 15%">是否为管理员</li>
+							<li class="screen-1-li right-border" style="width: 15%">姓名</li>
+							<li class="screen-1-li right-border" style="width: 29%">所属部门</li>
+							<li class="screen-1-li " style="width: 25%;">操作</li>
 						</ul>
 						<div id="content1_2" class="screen-1-list" style="width: 100%">
 							<!-- 
@@ -183,77 +185,36 @@
 						<!-- 表格部分 -->
 						<ul class="screen-1-ul" style="border-top: 1px solid">
 							<li class="screen-1-li right-border" style="width: 12%">用户名</li>
-							<li class="screen-1-li right-border" style="width: 12%">姓名</li>
-							<li class="screen-1-li right-border" style="width: 15%">所属部门</li>
-							<li class="screen-1-li right-border" style="width: 12%">收看直播权限</li>
-							<li class="screen-1-li right-border" style="width: 12%">下载视频权限</li>
-							<li class="screen-1-li right-border" style="width: 12%">收听广播权限</li>
-							<li class="screen-1-li right-border" style="width: 12%">下载广播权限</li>
-							<li class="screen-1-li " style="width: 12%;">查看数据权限</li>
+							<li class="screen-1-li right-border" style="width: 9%">姓名</li>
+							<li class="screen-1-li right-border" style="width: 13%">所属部门</li>
+							<li class="screen-1-li right-border" style="width: 13%">收看直播权限</li>
+							<li class="screen-1-li right-border" style="width: 13%">下载视频权限</li>
+							<li class="screen-1-li right-border" style="width: 13%">收听广播权限</li>
+							<li class="screen-1-li right-border" style="width: 13%">下载广播权限</li>
+							<li class="screen-1-li " style="width: 13%;">查看数据权限</li>
 							</ul>
-						<div id="list" class="screen-1-list" style="width: 100%">
-							<ul class="screen-1-ul">
-								<li class="screen-1-li right-border" style="width: 12%">aaa</li>
-								<li class="screen-1-li right-border" style="width: 12%">sss</li>
-								<li class="screen-1-li right-border" style="width: 15%">sss</li>
-								<li class="screen-1-li right-border" style="width: 12%">
-									<input class="watchTV  allbtn" type="checkbox" name="box-watch" >
-								</li>
-								<li class="screen-1-li right-border" style="width: 12%">
-									<input class="loadTV  allbtn" type="checkbox" name="box-load1">
-								</li>
-								<li class="screen-1-li right-border" style="width: 12%">
-									<input class="listenFM  allbtn" type="checkbox" name="box-listen" >
-								</li>
-								<li class="screen-1-li right-border" style="width: 12%">
-									<input class="loadFM  allbtn" type="checkbox" name="box-load2" >
-								</li>
-								<li class="screen-1-li" style="width: 12%">
-									<input class="checkdata allbtn" type="checkbox" name="box-data">
-								</li>
-							</ul>
-							<ul class="screen-1-ul">
-								<li class="screen-1-li right-border" style="width: 12%">aaa</li>
-								<li class="screen-1-li right-border" style="width: 12%">sss</li>
-								<li class="screen-1-li right-border" style="width: 15%">sss</li>
-								<li class="screen-1-li right-border" style="width: 12%">
-									<input class="watchTV  allbtn" type="checkbox" name="box-watch"/>
-								</li>
-								<li class="screen-1-li right-border" style="width: 12%">
-									<input class="loadTV  allbtn" type="checkbox" name="box-load1"/>
-								</li>
-								<li class="screen-1-li right-border" style="width: 12%">
-									<input class="listenFM  allbtn" type="checkbox" name="box-listen"/>
-								</li>
-								<li class="screen-1-li right-border" style="width: 12%">
-									<input class="loadFM  allbtn" type="checkbox" name="box-load2"/>
-								</li>
-								<li class="screen-1-li" style="width: 12%">
-									<input class="checkdata allbtn" type="checkbox" name="box-data"/>
-								</li>
-							</ul>
-						</div>
+						<div id="list" class="screen-1-list" style="width: 100%"></div>
 						<ul class="screen-1-ul">
 							<li class="screen-1-li right-border" style="width: 12%">&nbsp;</li>
-							<li class="screen-1-li right-border" style="width: 12%">&nbsp;</li>
-							<li class="screen-1-li right-border" style="width: 15%">&nbsp;</li>
-							<li class="screen-1-li right-border" style="width: 12%">
+							<li class="screen-1-li right-border" style="width: 9%">&nbsp;</li>
+							<li class="screen-1-li right-border" style="width: 13%">&nbsp;</li>
+							<li class="screen-1-li right-border" style="width: 13%">
 								 <input type="checkbox"  onclick="changeState(0, this.checked)" id="watchTVbtn">
 								 <label  for="watchTVbtn" class="allchoice">全选</label> 
 							</li>
-							<li class="screen-1-li right-border" style="width: 12%">
+							<li class="screen-1-li right-border" style="width: 13%">
 								 <input type="checkbox"  onclick="changeState(1, this.checked)" id="loadTVbtn">
 								 <label for="loadTVbtn" class="allchoice">全选</label>
 							</li>
-							<li class="screen-1-li right-border" style="width: 12%">
+							<li class="screen-1-li right-border" style="width: 13%">
 								<input type="checkbox"  onclick="changeState(2, this.checked)" id="listenFMbtn">
 								<label class="allchoice" for="listenFMbtn">全选</label> 
 							</li>
-							<li class="screen-1-li right-border" style="width: 12%">
+							<li class="screen-1-li right-border" style="width: 13%">
 								<input type="checkbox"  onclick="changeState(3, this.checked)" id="loadFMbtn">
 								<label class="allchoice" for="loadFMbtn">全选</label> 
 							</li>
-							<li class="screen-1-li" style="width: 12%">
+							<li class="screen-1-li" style="width: 13%">
 								<input type="checkbox"  onclick="changeState(4, this.checked)" id="checkdatabtn">
 								<label class="allchoice" for="checkdatabtn">全选</label> 
 							</li>
@@ -330,7 +291,7 @@
 			<!-- 内容3.1开始 -->
 			<div id="content3-1" class="body__screen-all">
 				<div class="screen-1">
-					<fieldset class="screen-1-field">
+					<fieldset id="set3" class="screen-1-field">
 						<legend>频道点击率</legend>
 						<div class="container">
 							<canvas id="myChart1">
@@ -397,7 +358,7 @@
 			<!-- 内容3.2开始 -->
 			<div id="content3-2" class="body__screen-all">
 				<div class="screen-1">
-					<fieldset class="screen-1-field">
+					<fieldset id="set4" class="screen-1-field">
 						<legend>个人点击量</legend>
 						<div class="container">
 							<canvas id="myChart2">

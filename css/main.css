@@ -4,14 +4,7 @@
 	--header-background: #4589cb;
 	--header-hover: #fff;
 }
-/*滚动条*/
-::-webkit-scrollbar {
-    display: none;
-}
 /*通配*/
-* {
-	margin: 0;
-}
 ul{
 	padding: 0;
 }
@@ -147,6 +140,7 @@ li{
 	top: 80px;
 	position: absolute;
 	z-index: 2;
+	overflow: hidden;
 }
 /*节目单开始*/
 .detail{
@@ -205,7 +199,7 @@ li{
 	position: absolute;
 	left: 20px;
 	top: 70px;
-	width: 247px;
+	width: 278px;
 	height: 301px;
 	border: 1px solid #58abff;
 	display: block;
@@ -270,7 +264,7 @@ li{
 	border-left: 1px solid #ccc;
 }
 .header-item-three{
-	margin-left: 30px;
+	margin-left: 52px;
 	width: 73px;
 }
 .header-item-three span{
@@ -298,7 +292,7 @@ li{
 .week-list li{
 	float: left;
 	height: 35px;
-	width: 33px;
+	width: 37px;
 	text-align: center;
 	line-height: 35px;
 	font-size: 15px;
@@ -321,7 +315,7 @@ li{
 }
 .tabel-li{
 	height: 31px;
-	width: 29px;
+	width: 33px;
 	text-align: center;
 	line-height: 31px;
 	float: left;
@@ -368,10 +362,9 @@ li{
 	height: 24px;
 	float: right;
 	cursor: pointer;
-	background-color: #000;
 	border-radius: 20px;
-	margin-top: 4px;
-	margin-right: 10px;
+	margin-top: 5px;
+	margin-right: 29px;
 	color: #fff;
 	text-align: center;
 	line-height: 24px;
@@ -386,18 +379,43 @@ li{
 	border-right: 1px solid #58abff;
 }
 .proname {
-	display: block;
-	width: 240px;
+	display: inline-block;
+	width: 235px;
 	height: 34px;
 	text-align: left;
 	line-height: 46px;
 	overflow: hidden;
-	margin-left: 7px;
+	margin-left: 14px;
+	float: left;
 }
 .protime{
-	width:70%;
+	width:40%;
 	height: 36px;
 	text-align: left;
 	margin-left: 14px;
 	display: inline-block;
+	float: left;
+}
+.static {
+	display: inline-block;
+	width: 48px;
+	height: 24px;
+	float: right;
+	cursor: pointer;
+	border-radius: 20px;
+	margin-top: 5px;
+	margin-right: 29px;
+	color: #fff;
+	text-align: center;
+	line-height: 24px;
+	font-size: 14px;
+}
+.live {
+	background-color: #c55f1b;
+}
+.static {
+	background-color: #246ab1;
+}
+.unplay {
+	background-color: #565656;
 }

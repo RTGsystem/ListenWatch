@@ -1,4 +1,4 @@
-const ip = 'http://192.168.124.220:8080';
+const ip = 'http://10.20.21.225:8080';
 var playType= 0;
 var playChannelId = 1;
 var playChannelName = '浙江卫视';
@@ -6,24 +6,63 @@ var playProId='';
 var currentType = 'TV';
 var currentMethod = 'live';
 var url = '';
-window.onresize =  window.onload = function (){
-	var content = document.getElementById('content');
-	var header = document.getElementById('header');
-	var leader = document.getElementsByClassName('leader');
-	var view = document.getElementsByClassName('view');
-	var viewer = document.getElementsByClassName('viewer');
-	var mod = document.getElementById('mod');
-	var detail = document.getElementsByClassName('detail');
-	var background = document.getElementById('background');
-	var conList = document.getElementById('con_list');
-	var date = document.getElementById('date');
-	var tc = document.getElementById('tc');
-	var chpass = document.getElementById('chpass');
-	var close = document.getElementById('close');
-	var back = document.getElementById('ch-tc-background');
-	var confirm = document.getElementById('confirm');
+var flag = 0;
+var flag1 = 0;
+var content = document.getElementById('content');
+var header = document.getElementById('header');
+var leader = document.getElementsByClassName('leader');
+var view = document.getElementsByClassName('view');
+var viewer = document.getElementsByClassName('viewer');
+var mod = document.getElementById('mod');
+var detail = document.getElementsByClassName('detail');
+var background = document.getElementById('background');
+var conList = document.getElementById('con_list');
+var date = document.getElementById('date');
+var tc = document.getElementById('tc');
+var chpass = document.getElementById('chpass');
+var close = document.getElementById('close');
+var back = document.getElementById('ch-tc-background');
+var confirm = document.getElementById('confirm');
+window.onload = function (){
+	if(getCookie('userid') == '' && getCookie('userid') == false){
+		alert('您还未登录！请先登录！');
+		window.location.href = './index.html';
+        return false;
+	}
+	if(flag1 == 0){
+		$.ajax({
+			url: ip+ '/user/getUserByUserId',
+			type: 'post',
+			dataType: 'JSON',
+			data: {
+				userid: getCookie('userid')
+			},
+			success: function(res){
+				if(res.resultCode===100){
+					flag1 = 1;
+					if(res.resultData.resultData[0].formpurview == 0 && res.resultData.resultData[0].identity == 0){
+						$('#admin').css('display', 'none');
+					}
+					if(res.resultData.resultData[0].tvdownload == 0){
+						//用户具有下载tv权限
+					}
+					if(res.resultData.resultData[0].fmdownload == 0){
+						//用户具有下载fm权限
+					}
+				}
+			},
+			error: function(err){
+				console.log('网络请求失败，无法登录！');
+				window.location.href = './index.html';
+			}
+		});
+	}
 	// 悬停方式弹出信息源列表
 	mod.onmouseover = function(){
+		if (flag == 0) {
+			getChannelList();
+			flag = 1;
+		}
 		clearInterval(leader[0].time);
 		move(leader[0], 0, 10);
 		background.style.display = 'block';
@@ -51,15 +90,22 @@ window.onresize =  window.onload = function (){
 	view[0].style.height = contentHeight + 'px';
 	viewer[0].style.height = contentHeight - 70 + 'px';
 	detail[0].style.height = viewer[0].offsetHeight + 'px';
-	conList.style.height = viewer[0].offsetHeight - 145 + 'px';
+	conList.style.height = viewer[0].offsetHeight - 90 + 'px';
 	viewer[0].style.width = document.documentElement.clientWidth - 425 + 'px';
-	var fmlist = document.getElementById('FMList');
-	var tvlist = document.getElementById('TVList');
-	fmlist.style.height = tvlist.offsetHeight > fmlist.offsetHeight ? tvlist.offsetHeight : fmlist.offsetHeight + 'px';
 	// 函数调用
 	select();
 	//getTime();
 };
+window.onresize = function (){
+	var contentHeight = document.documentElement.clientHeight-header.offsetHeight;
+	content.style.height = contentHeight + 'px';
+	leader[0].style.height = contentHeight + 'px';
+	view[0].style.height = contentHeight + 'px';
+	viewer[0].style.height = contentHeight - 70 + 'px';
+	detail[0].style.height = viewer[0].offsetHeight + 'px';
+	conList.style.height = viewer[0].offsetHeight - 90 + 'px';
+	viewer[0].style.width = document.documentElement.clientWidth - 425 + 'px';
+}
 init();//初始化
 // 移动封装
 var timer = null;//时间对象 
@@ -125,7 +171,7 @@ function select(){
 		$("#monthList").val(currMonth + "月");
 		$("#date").text(currYear + "-" + currMonth + "-" + d.getDate());
 		ergodicDate(currYear, currMonth);
-		getSelectDate(currYear + "-" + currMonth + "-" + d.getDate())
+		proListForDate(currYear + "-" + currMonth + "-" + d.getDate())
 	});
 	var currN = 0;
 	var currK = 0;
@@ -243,7 +289,7 @@ function select(){
 	$("#yearList,#monthList").on("change", function(e) {
 		ergodicDate($("#yearList").val().split("年")[0], $("#monthList").val().split("月")[0]);
 		$("#date").text($("#yearList").val().split("年")[0] + "-" + $("#monthList").val().split("月")[0] + "-" + currDate);
-		getSelectDate($("#yearList").val().split("年")[0] + "-" + $("#monthList").val().split("月")[0] + "-" + currDate)
+		proListForDate($("#yearList").val().split("年")[0] + "-" + $("#monthList").val().split("月")[0] + "-" + currDate)
 	});
 	$(".day-tabel").on("click", ".tabel-li", function(e) {
 		e.stopPropagation();
@@ -287,22 +333,21 @@ function select(){
 			$(".select-date").css("display", "none");
 		}
 		var getDate = $("#yearList").val().split("年")[0] + "-" + $("#monthList").val().split("月")[0] + "-" + $(this).html();
-		getSelectDate(getDate);
+		proListForDate(getDate);
 	});
 }
-function getSelectDate(result){
-	var dateSearch = getTrueDate(result);
-	proListForDate(dateSearch);
-}
-///////////////////////////////////未完待续
 function getTrueDate(result){
 	if(result.length === 8){
 		return dateSearch = result.substring(0,5)+'0'+result.charAt(5)+result.charAt(6)+'0'+result.charAt(7);
 	}else if(result.length === 9){
-		return false;
+		if(result.charAt(7)==='-'){
+			return dateSearch = result.substring(0,8)+'0'+result.charAt(8);
+		}else if(result.charAt(6)==='-'){
+			return dateSearch = result.substring(0,5)+'0'+result.substring(5,9);
+		}
 	}
 }
-// 获取当前时间
+//获取当前时间
 var beforeDate = false;
 var nowDate,nowTime;
 function getTime(){
@@ -311,25 +356,29 @@ function getTime(){
 	var myMonth = myDate.getMonth()+1;
 	var myDay = myDate.getDate();
 	var myHour = myDate.getHours();
+	var mySecond = myDate.getSeconds();
+	if(myHour<10){
+		myHour = '0'+myHour;
+	}
 	var myMinute = myDate.getMinutes();
+	if(myMinute<10){
+		myMinute = '0'+myMinute;
+	}
+	if(mySecond<10){
+		mySecond = '0'+mySecond;
+	}
 	nowDate = myYear+'-'+myMonth+'-'+myDay;
 	nowDate = nowDate.replace(/\-/g, "");
-	nowTime = myHour+'-'+myMinute;
+	nowTime = myHour+'-'+myMinute+'-'+mySecond;
 	nowTime = nowTime.replace(/\-/g, "");
-	var dateSearch=$('#date').text();
-	dateSearch=dateSearch.replace(/\-/g, "");
-	if(dateSearch<nowDate){
-		beforeDate=true;
-	}
 }
-
 //获取直播地址
 function getChannelURL(playType,playChannelId){
 	$.ajax({
 		url: ip+ '/channel/getChannelUrl',
 		type: 'post',
 		dataType: 'JSON',
-		async:false,
+		async: false,
 		data: {
 			'type1': playType,
 			'channelid': playChannelId
@@ -337,10 +386,12 @@ function getChannelURL(playType,playChannelId){
 		success: function(res){
 			if(res.resultCode === 100) {
 				url = res.resultData.resultData;
+				$('#view video source').attr('src',url);
+				player_live();
 			}
 		},
 		error: function(err){
-			console.log(err);
+			console.log('网络请求失败');
 		}
 	})
 }
@@ -350,7 +401,6 @@ function getProgramList(playType,playChannelName,dateSearch){
 		url: ip + '/program/getProgramList',
 		type: 'post',
 		dataType: 'JSON',
-		async:false,
 		data: {
 			'type1': playType,
 			'channelname': playChannelName,
@@ -358,25 +408,34 @@ function getProgramList(playType,playChannelName,dateSearch){
 		},
 		success: function(res){
 			if(res.resultCode===100){
+				getTime();
+				dateSearch = getDateBack(dateSearch).replace(/\-/g, "");
+				if(dateSearch<nowDate){
+					beforeDate=true;
+				}else{
+					beforeDate = false;
+				}
 				var proid,prourl,proname,prostart,proend;
 				var proList = res.resultData.resultData;
 				for(var i=0;i<proList.length;i++){
 					proid = proList[i].proid;
 					prourl = proList[i].defaulturl;
 					proname = proList[i].proname;
-					prostart = proList[i].start.substring(0,5);
-					proend = proList[i].end.substring(0,5);
+					prostart = proList[i].start;
+					comparetStart = prostart.replace(/\:/g, "");
+					proend = proList[i].end;
+					comparetEnd = proend.replace(/\:/g, "");
 					if(beforeDate===true){//小于当天，则节目单每行都加上回看按钮
 						var proNews='<li data-id="'+proid+'" class="proli"><span class="proname">'+proname+'</span><span  class="protime">'+prostart+'-'+proend+'</span><div class="static">回放</div></li>';
 						$('#con_list_ul').append(proNews);
-					}else{
-						if(nowTime>prostart&&nowTime<proend){//当前直播
+					}else if(beforeDate===false){
+						if(nowTime>comparetStart&&nowTime<comparetEnd){//当前直播
 							var proNews='<li data-id="'+proid+'" class="proli"><span class="proname">'+proname+'</span><span  class="protime">'+prostart+'-'+proend+'</span><div class="live">直播</div></li>';
 							$('#con_list_ul').append(proNews);
-						}else if(nowTime<prostart){//今日已播
+						}else if(nowTime>comparetEnd){//今日已播
 							var proNews='<li data-id="'+proid+'" class="proli"><span class="proname">'+proname+'</span><span  class="protime">'+prostart+'-'+proend+'</span><div class="static">回放</div></li>';
 							$('#con_list_ul').append(proNews);
-						}else{
+						}else if(nowTime<comparetStart){
 							var proNews='<li data-id="'+proid+'" class="proli"><span class="proname">'+proname+'</span><span  class="protime">'+prostart+'-'+proend+'</span><div class="unplay">未播</div></li>';
 							$('#con_list_ul').append(proNews);
 						}
@@ -395,37 +454,35 @@ function getProgramList(playType,playChannelName,dateSearch){
 //获取左侧频道导航列表
 function getChannelList(type){
 	$.ajax({
-		url: ip + '/channel/getChannelList',
+		url: ip + '/user/getChannelList',
 		type: 'post',
 		dataType: 'JSON',
-		data: {
-			'type1': type
-		},
+		data: {},
 		success: function(res){
 			if(res.resultCode===100){
-				var channelList=res.resultData.resultData;
-				var channelListLen=channelList.length;
-				for(var j=0;j<channelListLen;j++){//按左右添加TV列表和FM列表
-					var channelId=channelList[j].channelid,
-							channelName=channelList[j].channelname;
-							channelIcon=channelList[j].icon;
-					if(type===0){
-						var TVNews=`<li data-id="`+channelId+`">
-							<div data-id="`+channelId+`" class="tv_logo" style="background-img:url(`+channelIcon+`)"></div>
-							<span data-id="`+channelId+`">`+channelName+`</span>
-						</li>`;
+				var arr = res.resultData.resultData;
+				for(var i = 0; i < arr.length; i++){
+					if(arr[i].type == 0){
+						var TVNews = `<li data-id="${arr[i].channelid}">
+								<div data-id="${arr[i].channelid}" class="tv_logo" style="background:url(${arr[i].icon})"></div>
+								<span data-id="${arr[i].channelid}">${arr[i].channelname}</span>
+							</li>`;
 						$('#TVList').append(TVNews);
 					}
-					else if(type===1){
-						var FMNews=`<li data-id="`+channelId+`">
-							<div data-id="`+channelId+`" class="fm_logo" style="background-img:url(`+channelIcon+`)"></div>
-							<span data-id="`+channelId+`">`+channelName+`</span>
-						</li>`;
+					if(arr[i].type == 1){
+						var FMNews = `<li data-id="${arr[i].channelid}">
+								<div data-id="${arr[i].channelid}" class="fm_logo" style="background:url(${arr[i].icon})"></div>
+								<span data-id="${arr[i].channelid}">${arr[i].channelname}</span>
+							</li>`;
 						$('#FMList').append(FMNews);
 					}
 				}
 			}	
-			$('.leader ul li').on('click',function(event){
+			$('.leader ul li div').on('click',function(event){
+				event.stopPropagation();
+				selectChannel(event);
+			});
+			$('.leader ul li span').on('click',function(event){
 				event.stopPropagation();
 				selectChannel(event);
 			});
@@ -441,18 +498,61 @@ function getProgramUrl(playType,playProId,dateSearch){
 		url: ip+ '/program/getProgramUrl',
 		type: 'post',
 		dataType: 'JSON',
+		async: false,
 		data: {
 			'type1': playType,
-			'proId': playProId,
-			'data': dateSearch
+			'proid': playProId,
+			'prodate': dateSearch
 		},
 		success: function(res){
 			if(res.resultCode===100){
-				url = res.resultData.url;
+				url = res.resultData.resultData.defaulturl;
 			}
 		},
 		error: function(err){
 			console.log('网络请求失败');
 		}
-	})
+	});
 }
+// 修改密码
+function alter(){
+	var op = document.getElementById('op').value;
+	var np = document.getElementById('np').value;
+	var rp = document.getElementById('rp').value;
+	if (op == ''||np == ''||rp == '') {
+		alert('您的输入不完整！');
+		return false;
+	}else if(np != rp){
+		alert('两次输入的新密码不一致！');
+		return false;
+	}else{
+		$.ajax({
+			url: ip+ '/user/userModifyPassword',
+			type: 'post',
+			dataType: 'JSON',
+			// async: false,
+			data: {
+				userid: getCookie('userid'),
+				oldPassword: op,
+				newPassword: np
+			},
+			success: function(res){
+				if(res.resultCode===100){
+					alert('密码修改成功！');
+				}else{
+					alert('旧密码输入错误！');
+				}
+			},
+			error: function(err){
+				console.log('网络请求失败');
+			}
+		});
+	}
+}
+function exit(){
+	removeCookie('userid');
+	window.location.href='./index.html';
+}
+// window.onbeforeunload = function(){
+//     removeCookie('userid');
+// }

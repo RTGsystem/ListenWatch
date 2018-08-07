@@ -1,6 +1,11 @@
-const ip = 'http://192.168.124.220:8080';
+const ip = 'http://10.20.21.225:8080';
 $(function(){
     // 侧边栏显示隐藏开始
+    if(getCookie('userid') == '' && getCookie('userid') == false){
+        alert('您还未登录！请先登录！');
+        window.location.href = './index.html';
+        return false;
+    }
     $('#title1-1').click(function() {
         $('#content1-1').show();
         $('#content1-2').hide();
@@ -20,14 +25,18 @@ $(function(){
             data: {
             },
             success: function(res){
+                function check(boolean){
+                    return boolean == 1 ? '是' : '否';
+                }
                 if (res.resultCode == 100) {
                     let arr_temp = res.resultData.resultData;
                     for(let i=0;i<arr_temp.length;i++){
                         let content = `<ul class='screen-1-ul'>
-                            <li class='screen-1-li right-border' style='width: 20%'>${arr_temp[i].userid}</li>
-                            <li class='screen-1-li right-border' style='width: 20%'>${arr_temp[i].username}</li>
-                            <li class='screen-1-li right-border' style='width: 20%'>${arr_temp[i].department}</li>
-                            <li class='screen-1-li' style='width: 39%'>
+                            <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].userid}</li>
+                            <li class='screen-1-li right-border' style='width: 15%'>${check(arr_temp[i].identity)}</li>
+                            <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].username}</li>
+                            <li class='screen-1-li right-border' style='width: 29%'>${arr_temp[i].department}</li>
+                            <li class='screen-1-li' style='width: 25%'>
                                 <button class='screen-1-revise' onclick='toggle_button_revise(event)'>修改</button> 
                                 <button class='screen-1-delete' style='background: #c30' onclick='delete_ul(event)'>删除</button>
                             </li>
@@ -68,21 +77,21 @@ $(function(){
                     for(let i=0;i<arr_temp.length;i++){
                         let content = `<ul class='screen-1-ul'>
                             <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].userid}</li>
-                            <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].username}</li>
-                            <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].department}</li>
-                            <li class='screen-1-li right-border' style='width: 12%'>
+                            <li class='screen-1-li right-border' style='width: 9%'>${arr_temp[i].username}</li>
+                            <li class='screen-1-li right-border' style='width: 13%'>${arr_temp[i].department}</li>
+                            <li class='screen-1-li right-border' style='width: 13%'>
                                 <input class='watchTV allbtn' type='checkbox' name='box-watch' ${check(arr_temp[i].tvpurview)}/>
                             </li>
-                            <li class="screen-1-li right-border" style="width: 12%">
+                            <li class="screen-1-li right-border" style="width: 13%">
                                 <input class='loadTV allbtn' type='checkbox' name='box-load1' ${check(arr_temp[i].tvdownload)}/>
                             </li>
-                            <li class="screen-1-li right-border" style="width: 12%">
+                            <li class="screen-1-li right-border" style="width: 13%">
                                 <input class='listenFM allbtn' type='checkbox' name='box-listen' ${check(arr_temp[i].fmpurview)}/>
                             </li>
-                            <li class="screen-1-li right-border" style="width: 12%">
+                            <li class="screen-1-li right-border" style="width: 13%">
                                 <input class='loadFM allbtn' type='checkbox' name='box-load2' ${check(arr_temp[i].fmdownload)}/>
                             </li>
-                            <li class="screen-1-li" style="width: 12%">
+                            <li class="screen-1-li" style="width: 13%">
                                 <input class='checkdata allbtn' type='checkbox' name='box-data' ${check(arr_temp[i].formpurview)}/>
                             </li>
                         </ul>`;
@@ -225,9 +234,13 @@ $(function(){
     });
     let dv = document.getElementById('set');
     let dv2 = document.getElementById('set2');
+    let dv3 = document.getElementById('set3');
+    let dv4 = document.getElementById('set4');
     let h = document.documentElement.clientHeight - $('.header').eq(0).height() - 50;
     dv.style.height = h +'px';
     dv2.style.height = h +'px';
+    dv3.style.height = h +'px';
+    dv4.style.height = h +'px';
     return false;
 });
 
@@ -316,8 +329,8 @@ function toggle_button_revise(ev){
         let t1 = ev.target.parentNode.parentNode.firstElementChild.innerHTML;
         let t2 = $target.parent().prev().prev().val();
         let t3 = $target.parent().prev().val();
-        $target.parent().prev().replaceWith(`<li class='screen-1-li right-border' style='width: 20%'>${t3}</li>`);
-        $target.parent().prev().prev().replaceWith(`<li class='screen-1-li right-border' style='width: 20%'>${t2}</li>`);
+        $target.parent().prev().replaceWith(`<li class='screen-1-li right-border' style='width: 29%'>${t3}</li>`);
+        $target.parent().prev().prev().replaceWith(`<li class='screen-1-li right-border' style='width: 15%'>${t2}</li>`);
         $target.parent().parent().css("background-color","#fff").children().css("background-color","#fff");
         $.ajax({
             url: ip + '/user/updateUser',
@@ -341,8 +354,8 @@ function toggle_button_revise(ev){
         });
     }else{
         $target.text('保存');
-        $target.parent().prev().replaceWith('<input type="text" class="yr_input" value='+$target.parent().prev().text()+'>');
-        $target.parent().prev().prev().replaceWith('<input type = "text" class="yr_input" value='+$target.parent().prev().prev().text()+'>');
+        $target.parent().prev().replaceWith('<input type="text" class="yr_input" style="width: 29%" value='+$target.parent().prev().text()+'>');
+        $target.parent().prev().prev().replaceWith('<input type = "text" style="width: 15%" class="yr_input" value='+$target.parent().prev().prev().text()+'>');
         $target.parent().parent().css("background-color","#ccc").children().css("background-color","#ccc");
     }
 }
@@ -357,7 +370,7 @@ function selectUsers(){
     }else if (val == '用户名') {
         url = '/user/getUserByUserId';
         key = 'userid';
-        if(!(/(^[1-9]\d*$)/.test(key))||key.length>=10){
+        if(!(/^[0-9]{1,9}$/.test(value))){
             $('#content1_2').empty();
             alert('没有查询到该用户');
             return false;
@@ -437,21 +450,21 @@ function checkCancel() {
                     for(let i=0;i<arr_temp.length;i++){
                         let content = `<ul class='screen-1-ul'>
                             <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].userid}</li>
-                            <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].username}</li>
-                            <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].department}</li>
-                            <li class='screen-1-li right-border' style='width: 12%'>
+                            <li class='screen-1-li right-border' style='width: 9%'>${arr_temp[i].username}</li>
+                            <li class='screen-1-li right-border' style='width: 13%'>${arr_temp[i].department}</li>
+                            <li class='screen-1-li right-border' style='width: 13%'>
                                 <input class='watchTV allbtn' type='checkbox' name='box-watch' ${check(arr_temp[i].tvpurview)}/>
                             </li>
-                            <li class="screen-1-li right-border" style="width: 12%">
+                            <li class="screen-1-li right-border" style="width: 13%">
                                 <input class='loadTV allbtn' type='checkbox' name='box-load1' ${check(arr_temp[i].tvdownload)}/>
                             </li>
-                            <li class="screen-1-li right-border" style="width: 12%">
+                            <li class="screen-1-li right-border" style="width: 13%">
                                 <input class='listenFM allbtn' type='checkbox' name='box-listen' ${check(arr_temp[i].fmpurview)}/>
                             </li>
-                            <li class="screen-1-li right-border" style="width: 12%">
+                            <li class="screen-1-li right-border" style="width: 13%">
                                 <input class='loadFM allbtn' type='checkbox' name='box-load2' ${check(arr_temp[i].fmdownload)}/>
                             </li>
-                            <li class="screen-1-li" style="width: 12%">
+                            <li class="screen-1-li" style="width: 13%">
                                 <input class='checkdata allbtn' type='checkbox' name='box-data' ${check(arr_temp[i].formpurview)}/>
                             </li>
                         </ul>`;
@@ -514,7 +527,7 @@ function selectUsers2(){
     }else if (val == '用户名') {
         url = '/user/getUserByUserId';
         key = 'userid';
-        if(!(/(^[1-9]\d*$)/.test(key))||key.length>=10){
+        if(!(/^[0-9]{1,9}$/.test(value))){
             $('#content1_2').empty();
             alert('没有查询到该用户');
             return false;
@@ -545,25 +558,25 @@ function selectUsers2(){
                 }
                 for(let i=0;i<arr_temp.length;i++){
                     let content = `<ul class='screen-1-ul'>
-                        <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].userid}</li>
-                        <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].username}</li>
-                        <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].department}</li>
-                        <li class='screen-1-li right-border' style='width: 12%'>
-                            <input class='watchTV allbtn' type='checkbox' name='box-watch' ${check(arr_temp[i].tvpurview)}/>
-                        </li>
-                        <li class="screen-1-li right-border" style="width: 12%">
-                            <input class='loadTV allbtn' type='checkbox' name='box-load1' ${check(arr_temp[i].tvdownload)}/>
-                        </li>
-                        <li class="screen-1-li right-border" style="width: 12%">
-                            <input class='listenFM allbtn' type='checkbox' name='box-listen' ${check(arr_temp[i].fmpurview)}/>
-                        </li>
-                        <li class="screen-1-li right-border" style="width: 12%">
-                            <input class='loadFM allbtn' type='checkbox' name='box-load2' ${check(arr_temp[i].fmdownload)}/>
-                        </li>
-                        <li class="screen-1-li" style="width: 12%">
-                            <input class='checkdata allbtn' type='checkbox' name='box-data' ${check(arr_temp[i].formpurview)}/>
-                        </li>
-                    </ul>`;
+                            <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].userid}</li>
+                            <li class='screen-1-li right-border' style='width: 9%'>${arr_temp[i].username}</li>
+                            <li class='screen-1-li right-border' style='width: 13%'>${arr_temp[i].department}</li>
+                            <li class='screen-1-li right-border' style='width: 13%'>
+                                <input class='watchTV allbtn' type='checkbox' name='box-watch' ${check(arr_temp[i].tvpurview)}/>
+                            </li>
+                            <li class="screen-1-li right-border" style="width: 13%">
+                                <input class='loadTV allbtn' type='checkbox' name='box-load1' ${check(arr_temp[i].tvdownload)}/>
+                            </li>
+                            <li class="screen-1-li right-border" style="width: 13%">
+                                <input class='listenFM allbtn' type='checkbox' name='box-listen' ${check(arr_temp[i].fmpurview)}/>
+                            </li>
+                            <li class="screen-1-li right-border" style="width: 13%">
+                                <input class='loadFM allbtn' type='checkbox' name='box-load2' ${check(arr_temp[i].fmdownload)}/>
+                            </li>
+                            <li class="screen-1-li" style="width: 13%">
+                                <input class='checkdata allbtn' type='checkbox' name='box-data' ${check(arr_temp[i].formpurview)}/>
+                            </li>
+                        </ul>`;
                     $('#list').append(content);
                 }
             }else{
@@ -649,7 +662,7 @@ function delete_ul_2_2(ev) {
             dataType: 'JSON',
             data: {
                 channelid: $(ev.target.parentNode.parentNode).attr('channelid'),
-                type: ev.target.parentNode.parentNode.firstElementChild.nextElementSibling.innerHTML == 'TV' ? 0 : 1
+                type1: ev.target.parentNode.parentNode.firstElementChild.nextElementSibling.innerHTML == 'TV' ? 0 : 1
             },
             success: function(res){
                 if (res.resultCode == 100) {
@@ -741,7 +754,7 @@ function selectUsers_2_2(){
     }else if(val == '信息源类型'){
         url = '/user/getChannelByType';
         key = 'type1';
-        if(!(/(^[1-9]\d*$)/.test(key))||key.length>=10){
+        if(!(/^[0-9]{1,9}$/.test(value))){
             if(value=='TV'||value=='tv'){
                 value=0;
             }else if(value=='FM'||value=='fm'){
@@ -757,7 +770,6 @@ function selectUsers_2_2(){
         key = '';
     }
     let json = {};
-    
     json[key] = value;
     $.ajax({
         url: ip + url,
@@ -795,3 +807,6 @@ function selectUsers_2_2(){
     });
 }
 // 信息源列表结束2.2
+// window.onbeforeunload = function(){
+//     removeCookie('userid');
+// }

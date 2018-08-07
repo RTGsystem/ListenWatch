@@ -11,12 +11,9 @@ var currentType='TV';
 function player_live(){
 	$('#myvideo').width('100%');
  	$('#myvideo').height('100%');
-	videojs.options.flash.swf = "js/video/VideoJs.swf";
+	videojs.options.flash.swf = "js/video/VideoJS.swf";
 	var play = new videojs('myvideo',{
 		"controls":"true",
-		"width":"800px",
-		"height":"600px",
-		"autoplay":"false"
 	},function(){
 		this.play();
 		this.on('keydown',function(){
@@ -41,18 +38,22 @@ function player_live(){
 function player_static(){
 	$('#myvideo').width('100%');
  	$('#myvideo').height('100%');
-	videojs.options.flash.swf = "js/video/VideoJs.swf";
+	videojs.options.flash.swf = "js/video/VideoJS.swf";
 	var play = new videojs('myvideo',{
 		"controls":"true",
-		"autoplay":"false"
 	},function(){
-		console.log(11111)
+		$('.vjs-mycss .vjs-current-time').css('display','inline-block');
+		$('.vjs-mycss .vjs-current-time').css('padding','0');
+		$('.vjs-mycss .vjs-duration').css('display','inline-block');
+		$('.vjs-mycss .vjs-duration').css('margin-left','0');
+		$('.vjs-mycss .vjs-remaining-time').css('display','none');
+		$('.vjs-mycss .vjs-time-divider').css('display','inline-block');
+		$('.vjs-mycss .vjs-time-divider').css('margin-top','-1px');
 		var isPause = true;
 		this.pause();
 		this.on('keydown',function(event){
 			event.preventDefault();
 			if(event.keyCode === 32) {
-				console.log(111);
 				isPause == false ? this.pause() : this.play();
 				isPause = !isPause;
 			}
@@ -93,35 +94,19 @@ function player_static(){
 	4.重置current
 */
 function changeSource(currentType,currentMethod,goalType,goalMethod,url){
-	if(goalType==='FM'&&goalMethod==='static'){
-		if(Destroy){
-			Destroy.destroy();
-		}
-		// player_mp3()内部已经清空并添加新内容
-		$('#view').empty().append('<video id="myvideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-mycss"><source src="'+url+'" type="audio/mp3"></video>');
-		player_static(url);
-		currentType=goalType;
-		currentMethod=goalMethod;
-	}else if(goalType==='TV'&&goalMethod==='static'){
-		if(currentType==='TV'&&currentMethod==='static'){
-			$('#myvideo_html5_api').attr('src',url);
-		}else{
-			if(Destroy){
-				Destroy.destroy();
-			}
+	Destroy.destroy();
+	if(goalMethod==='static'){
+		if(goalType==='FM'){
+			$('#view').empty().append('<video id="myvideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-mycss"><source src="'+url+'" type="audio/mp3"></video>');
+			player_static(url);
+		}else if(goalType==='TV'){
 			$('#view').empty().append('<video id="myvideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-mycss"><source src="'+url+'" type="video/mp4"></video>');
-			player_static();
+			player_static(url);
 		}
-		currentType=goalType;
-		currentMethod=goalMethod;
-	}else {
+	}else if(goalMethod==='live'){
 		$('#view').empty().append('<video id="myvideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-mycss"><source src="'+url+'" type="rtmp/flv"></video>');
-		if(Destroy){
-			Destroy.destroy();
-		}
 		player_live();
-		// if (goalType==='FM'&&goalMethod==='live') {
-		// 	player_cover();
-		// }
 	}
+	currentTypeNow=goalType;
+	currentMethodNow=goalMethod;
 }

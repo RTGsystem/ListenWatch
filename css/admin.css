@@ -1,24 +1,9 @@
-@charset "utf-8";
-::-webkit-scrollbar {
-	width: 5px;
-	/*滚动条宽度*/
-	height: 5px;
-	/*滚动条高度*/
-}
 button {
 	outline: 0;
 	cursor: pointer;
 }
-/*定义滚动条轨道 内阴影+圆角*/
-/*定义滑块 内阴影+圆角*/
-::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	/*滚动条的圆角*/
-	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
-	background-color: rgba(42, 69, 90, 0);
-	/*滚动条的背景颜色*/
-}
 body {
+	min-width: 1024px;
 	margin: 0;
 	padding: 0;
 	overflow-y: auto;
@@ -132,9 +117,16 @@ body {
 }
 .screen-1-findresult , .screen-1-list {
 	margin:0 auto;
-	width: 50%;
+	overflow: hidden;
     background-color: #fff;
     padding: 0;
+    white-space:nowrap;
+}
+.screen-1-list a{
+	margin-left: 5%;
+}
+.screen-1-list div{
+	margin-top: 20px;
 }
 .screen-1-findresult-list , .screen-1-ul{
 	border-color: black;
@@ -148,12 +140,12 @@ body {
 }
 .screen-1-li{
 	text-align: center;
+	overflow: hidden;
 	float: left;
 }
 .right-border{
 	border-right: 1px solid black;	
 }
-
 .screen-1-ul{
 	border-top: hidden;
 }
@@ -197,7 +189,6 @@ ul,li{
 	margin: 0;
 	padding: 0;
 }
-
 a {
 	text-decoration: none;
 }
@@ -382,15 +373,6 @@ a {
 }
 input[type=checkbox]{
 	cursor: pointer;
-}
-.screen-1-list{
-	 white-space:nowrap;
-}
-.screen-1-list a{
-	margin-left: 5%;
-}
-.screen-1-list div{
-	margin-top: 20px;
 }
 #screen-userability{
 	width: 700px;
