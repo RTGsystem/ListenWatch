@@ -419,3 +419,10 @@ li{
 .unplay {
 	background-color: #565656;
 }
+#boxbox {
+	height: 100%;
+	width: 100%;
+	background-size: 100% auto;
+	background-image: url(../img/bg.jpg);
+	background-repeat: no-repeat;
+}

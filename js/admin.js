@@ -1,5 +1,5 @@
 const ip = 'http://10.20.21.225:8080';
-$(function(){
+window.onload = function(){
     // 侧边栏显示隐藏开始
     if(getCookie('userid') == '' && getCookie('userid') == false){
         alert('您还未登录！请先登录！');
@@ -242,15 +242,7 @@ $(function(){
     dv3.style.height = h +'px';
     dv4.style.height = h +'px';
     return false;
-});
-
-// function createUlinScreen1_2(username,personname,department){
-//     $('#content1_2').append('<ul class="screen-1-ul"><li class="screen-1-li right-border" style="width: 20%">'+username+'</li><li class="screen-1-li right-border" style="width: 20%">'+personname+'</li><li class="screen-1-li right-border" style="width: 20%">'+department+'</li><li class="screen-1-li" style="width: 39%;"><button class="screen-1-revise"  onclick="toggle_button_revise(event)">修改</button><button class="screen-1-delete" style="background-color: #c30;" onclick="delete_ul(event)">删除</button></li></ul>');
-// }
-// function createUlinScreen2_2(username,personname,department){
-//     $('#content2_2').append('<ul class="screen-1-ul"><li class="screen-1-li right-border" style="width: 20%">aaa</li><li class="screen-1-li right-border" style="width: 15%">sss</li><li class="screen-1-li right-border" style="width: 30%">ddd</li><li class="screen-1-li right-border" style="width: 15%">ddd</li><li class="screen-1-li" style="width: 19%;"><button class="screen-1-revise" onclick="toggle_button_revise_2_2(event)">修改</button><button class="screen-1-delete" style="background-color: #c30;" onclick="delete_ul(event)">删除</button></li></ul>');
-// }
-
+}
 // 添加用户开始1.1
 function addsuccess(){
     if($('#input1-1_1').val() == ''||$('#input2-1_1').val() == ''||$('#input3-1_1').val() == ''||$('#input4-1_1').val() == ''||$('#select1-1_1').val() == 0){
@@ -394,14 +386,18 @@ function selectUsers(){
         data: json,
         success: function(res){
             if (res.resultCode == 100) {
+                function check(boolean){
+                    return boolean == 1 ? '是' : '否';
+                }
                 $('#content1_2').empty();
                 let arr_temp = res.resultData.resultData;
                 for(let i=0;i<arr_temp.length;i++){
                     let content = `<ul class='screen-1-ul'>
-                        <li class='screen-1-li right-border' style='width: 20%'>${arr_temp[i].userid}</li>
-                        <li class='screen-1-li right-border' style='width: 20%'>${arr_temp[i].username}</li>
-                        <li class='screen-1-li right-border' style='width: 20%'>${arr_temp[i].department}</li>
-                        <li class='screen-1-li' style='width: 39%'>
+                        <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].userid}</li>
+                        <li class='screen-1-li right-border' style='width: 15%'>${check(arr_temp[i].identity)}</li>
+                        <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].username}</li>
+                        <li class='screen-1-li right-border' style='width: 29%'>${arr_temp[i].department}</li>
+                        <li class='screen-1-li' style='width: 25%'>
                             <button class='screen-1-revise' onclick='toggle_button_revise(event)'>修改</button> 
                             <button class='screen-1-delete' style='background: #c30' onclick='delete_ul(event)'>删除</button>
                         </li>
@@ -435,50 +431,50 @@ function changeState(num, isChecked){
 }
 function checkCancel() {
     $('#list').empty();
-        $.ajax({
-            url: ip + '/user/getUsers',
-            type: 'post',
-            dataType: 'JSON',
-            data: {
-            },
-            success: function(res){
-                if (res.resultCode == 100) {
-                    let arr_temp = res.resultData.resultData;
-                    function check(boolean){
-                        return boolean == 1 ? "checked='checked'" : "";
-                    }
-                    for(let i=0;i<arr_temp.length;i++){
-                        let content = `<ul class='screen-1-ul'>
-                            <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].userid}</li>
-                            <li class='screen-1-li right-border' style='width: 9%'>${arr_temp[i].username}</li>
-                            <li class='screen-1-li right-border' style='width: 13%'>${arr_temp[i].department}</li>
-                            <li class='screen-1-li right-border' style='width: 13%'>
-                                <input class='watchTV allbtn' type='checkbox' name='box-watch' ${check(arr_temp[i].tvpurview)}/>
-                            </li>
-                            <li class="screen-1-li right-border" style="width: 13%">
-                                <input class='loadTV allbtn' type='checkbox' name='box-load1' ${check(arr_temp[i].tvdownload)}/>
-                            </li>
-                            <li class="screen-1-li right-border" style="width: 13%">
-                                <input class='listenFM allbtn' type='checkbox' name='box-listen' ${check(arr_temp[i].fmpurview)}/>
-                            </li>
-                            <li class="screen-1-li right-border" style="width: 13%">
-                                <input class='loadFM allbtn' type='checkbox' name='box-load2' ${check(arr_temp[i].fmdownload)}/>
-                            </li>
-                            <li class="screen-1-li" style="width: 13%">
-                                <input class='checkdata allbtn' type='checkbox' name='box-data' ${check(arr_temp[i].formpurview)}/>
-                            </li>
-                        </ul>`;
-                        $('#list').append(content);
-                    }
-                }else{
-                    $('#list').empty();
-                    alert(res.resultMessage);
+    $.ajax({
+        url: ip + '/user/getUsers',
+        type: 'post',
+        dataType: 'JSON',
+        data: {
+        },
+        success: function(res){
+            if (res.resultCode == 100) {
+                let arr_temp = res.resultData.resultData;
+                function check(boolean){
+                    return boolean == 1 ? "checked='checked'" : "";
                 }
-            },
-            error: function(err){
-                console.log("网络请求失败" + err);
+                for(let i=0;i<arr_temp.length;i++){
+                    let content = `<ul class='screen-1-ul'>
+                        <li class='screen-1-li right-border' style='width: 12%'>${arr_temp[i].userid}</li>
+                        <li class='screen-1-li right-border' style='width: 9%'>${arr_temp[i].username}</li>
+                        <li class='screen-1-li right-border' style='width: 13%'>${arr_temp[i].department}</li>
+                        <li class='screen-1-li right-border' style='width: 13%'>
+                            <input class='watchTV allbtn' type='checkbox' name='box-watch' ${check(arr_temp[i].tvpurview)}/>
+                        </li>
+                        <li class="screen-1-li right-border" style="width: 13%">
+                            <input class='loadTV allbtn' type='checkbox' name='box-load1' ${check(arr_temp[i].tvdownload)}/>
+                        </li>
+                        <li class="screen-1-li right-border" style="width: 13%">
+                            <input class='listenFM allbtn' type='checkbox' name='box-listen' ${check(arr_temp[i].fmpurview)}/>
+                        </li>
+                        <li class="screen-1-li right-border" style="width: 13%">
+                            <input class='loadFM allbtn' type='checkbox' name='box-load2' ${check(arr_temp[i].fmdownload)}/>
+                        </li>
+                        <li class="screen-1-li" style="width: 13%">
+                            <input class='checkdata allbtn' type='checkbox' name='box-data' ${check(arr_temp[i].formpurview)}/>
+                        </li>
+                    </ul>`;
+                    $('#list').append(content);
+                }
+            }else{
+                $('#list').empty();
+                alert(res.resultMessage);
             }
-        });
+        },
+        error: function(err){
+            console.log("网络请求失败" + err);
+        }
+    });
 }
 function checkSave(){
     function parse(boolean){

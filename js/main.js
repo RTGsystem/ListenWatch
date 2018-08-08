@@ -95,7 +95,7 @@ window.onload = function (){
 	// 函数调用
 	select();
 	//getTime();
-};
+}
 window.onresize = function (){
 	var contentHeight = document.documentElement.clientHeight-header.offsetHeight;
 	content.style.height = contentHeight + 'px';

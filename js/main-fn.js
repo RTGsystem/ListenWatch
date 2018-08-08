@@ -4,6 +4,7 @@ function init(){
 	getChannelURL(playType,playChannelId);
 }
 function selectChannel(ev){
+	rmcover();
 	var dateSearch = getNowDate();
 	if ($(ev.target).parent().parent().attr('id')==='TVList'){
 		playType = 0;
@@ -20,7 +21,9 @@ function selectChannel(ev){
 		$('#con_list_ul').empty();
 		getProgramList(playType,playChannelName,dateSearch);
 		changeSource(currentType,currentMethod,'FM','live',url);
+		cover();
 	}
+	document.getElementById('currentPro').innerHTML = `监听监看回放系统&nbsp;&nbsp;·&nbsp;&nbsp;`+playChannelName;
 }
 function proListForDate(dateSearch){
 	dateSearch = getTrueDate(dateSearch);
@@ -28,6 +31,7 @@ function proListForDate(dateSearch){
 	getProgramList(playType,playChannelName,dateSearch);
 }
 function selectPro(ev){
+	rmcover();
 	if($(ev.target).attr('class')==='static'){
 		var dateSearch = $('#date').text();
 		dateSearch = getTrueDate(dateSearch);
@@ -37,6 +41,7 @@ function selectPro(ev){
 			changeSource(currentType,currentMethod,'TV','static',url);
 		}else if(playType ===1){
 			changeSource(currentType,currentMethod,'FM','static',url);
+			cover();
 		}
 	}else if($(ev.target).attr('class')==='live'){
 		getChannelURL(playType,playChannelId);
@@ -44,6 +49,7 @@ function selectPro(ev){
 			changeSource(currentType,currentMethod,'TV','live',url);
 		}else if(playType ===1){
 			changeSource(currentType,currentMethod,'FM','live',url);
+			cover();
 		}
 	}
 	else{
@@ -76,4 +82,12 @@ function getDateBack(date){
 		 	date = date.substring(0,date.length-2)+date.substring(date.length-1,date.length);
 		 } 
 	return date;
+}
+function cover(){
+	var $cover = $('.vjs-text-track-display');
+	$cover.append('<div id="boxbox" style="margin-top: 120px;"></div>');
+}
+function rmcover(){
+	var $cover = $('.vjs-text-track-display');
+	$cover.empty();
 }
