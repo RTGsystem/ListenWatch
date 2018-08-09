@@ -7523,11 +7523,11 @@ MediaError.errorTypes = ['MEDIA_ERR_CUSTOM', 'MEDIA_ERR_ABORTED', 'MEDIA_ERR_NET
  * @constant
  */
 MediaError.defaultMessages = {
-  1: 'You aborted the media playback',
-  2: 'A network error caused the media download to fail part-way.',
-  3: 'The media playback was aborted due to a corruption problem or because the media used features your browser did not support.',
-  4: 'The media could not be loaded, either because the server or network failed or because the format is not supported.',
-  5: 'The media is encrypted and we do not have the keys to decrypt it.'
+  1: '你终止了媒体播放,建议刷新网页',//'You aborted the media playback',
+  2: '网络错误导致媒体下载失败，建议刷新网页或者观看其他频道',//'A network error caused the media download to fail part-way.',
+  3: '媒体回放由于未知问题而中止，或者因为媒体使用了浏览器不支持的特性。',//'The media playback was aborted due to a corruption problem or because the media used features your browser did not support.',
+  4: '媒体无法加载，因为服务器或网络失败或因为格式不支持，建议观看其他频道',//'The media could not be loaded, either because the server or network failed or because the format is not supported.',
+  5: '该媒体文件被加密我们无法获取'//'The media is encrypted and we do not have the keys to decrypt it.'
 };
 
 // Add types as properties on MediaError
@@ -23965,8 +23965,11 @@ function videojs(id, options, ready) {
     if (videojs.getPlayers()[id]) {
 
       // If options or ready funtion are passed, warn
+      // if (options) {
+      //   _log2['default'].warn('Player "' + id + '" is already initialised. Options will not be applied.');
+      // }
       if (options) {
-        _log2['default'].warn('Player "' + id + '" is already initialised. Options will not be applied.');
+        _log2['default'].warn('上一个播放器未完全销毁');
       }
 
       if (ready) {

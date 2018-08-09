@@ -13,9 +13,17 @@ function player_live(){
  	$('#myvideo').height('100%');
 	videojs.options.flash.swf = "js/video/VideoJS.swf";
 	var play = new videojs('myvideo',{
-		"controls":"true",
+		"controls":"true"
 	},function(){
+		$('.vjs-mycss .vjs-remaining-time').css('display','none');
+		$('.vjs-mycss .vjs-live-control').attr('id','liveControl');
+		$('.vjs-mycss .vjs-live-control').css('cssText','display:inline-block!important');
+		$('.vjs-mycss .vjs-live-control').text('当前正在直播·'+playChannelName);
+		$('.vjs-mycss .vjs-live-control').css('text-align','left');
+		$('.vjs-mycss .vjs-live-control').css('color','#fff');
+		$('.vjs-mycss .vjs-progress-control').css('display','none');
 		this.play();
+		this.volume(0.5);
 		this.on('keydown',function(){
 			event.preventDefault();
 			if(event.keyCode === 38) {
@@ -26,7 +34,7 @@ function player_live(){
 				var vol = play.volume();
 				play.volume(vol-0.1);
 			}
-		})
+		});
 		return Destroy = {
 			destroy: function(){
 				play.dispose();
@@ -40,15 +48,18 @@ function player_static(){
  	$('#myvideo').height('100%');
 	videojs.options.flash.swf = "js/video/VideoJS.swf";
 	var play = new videojs('myvideo',{
-		"controls":"true",
+		"controls":"true"
 	},function(){
+		this.volume(0.5);
 		$('.vjs-mycss .vjs-current-time').css('display','inline-block');
 		$('.vjs-mycss .vjs-current-time').css('padding','0');
 		$('.vjs-mycss .vjs-duration').css('display','inline-block');
 		$('.vjs-mycss .vjs-duration').css('margin-left','0');
+		$('.vjs-mycss .vjs-duration').css('padding-left','0');
 		$('.vjs-mycss .vjs-remaining-time').css('display','none');
 		$('.vjs-mycss .vjs-time-divider').css('display','inline-block');
 		$('.vjs-mycss .vjs-time-divider').css('margin-top','-1px');
+		$('.vjs-mycss .vjs-time-divider').text('|');
 		var isPause = true;
 		this.pause();
 		this.on('keydown',function(event){

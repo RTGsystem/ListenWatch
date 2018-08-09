@@ -1,29 +1,18 @@
-/*中间大按钮*/
-.vjs-mycss .vjs-control-bar{
+.vjs-error .vjs-error-display .vjs-modal-dialog-content {
+	font-size: 2em;
+	padding-top: 50px;
 }
-.vjs-mycss .vjs-big-play-button:hover {
+.vjs-mycss .vjs-control-bar {
+	background-color: #444c;
 }
-/*底部播放暂停按钮*/
-.vjs-mycss .vjs-play-control {
-}
-.vjs-mycss .vjs-play-control:hover {
-}
-/*底部开始时间*/
-.vjs-mycss .vjs-current-time {
-	display: inline-block;
-	padding: 0;
-}
-/*底部总时间*/
-.vjs-mycss .vjs-duration {
-	display: inline;
-	padding-left: 0;
-}
-/*底部剩余时间*/
-.vjs-mycss .vjs-remaining-time {
-	display: none;
-}
-/*中间控件*/
-.vjs-mycss .vjs-time-divider {
-	display: inline;
+.vjs-mycss .vjs-control-bar .vjs-volume-menu-button .vjs-menu,
+.vjs-mycss .vjs-progress-control {
 	margin-top: -1px;
 }
+/*.vjs-mycss .vjs-live-control {
+	display: inline-block !important;
+	text-align: left;
+}
+.vjs-mycss .vjs-progress-control {
+	display: none;
+}*/

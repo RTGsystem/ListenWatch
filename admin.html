@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="js/admin.js"></script>
-		<script type="text/javascript" src="js/Chart.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
 		<script src="js/yjh_main.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/admin.css">
 		<link rel="stylesheet" href="font/iconfont.css" />
@@ -16,7 +16,7 @@
 			<div class="header">
 				<a href="" class="header__logo">监听监看回放系统 · 管理系统</a>
 				<nav class="header__nav">
-					<a href="index.html" class="header__nav-item header__nav-item-2">退出</a>
+					<a onclick="exit()" class="header__nav-item header__nav-item-2">退出</a>
 				</nav>
 			</div>
 			<div class="nav">
@@ -53,10 +53,10 @@
 						<a href="javascript:;"><i class="my-icon nav-icon icon_3"></i><span>数据可视化</span><i class="my-icon nav-more"></i></a>
 						<ul>
 							<li id="title3-1">
-								<a href="javascript:;"><span>频道点击率</span></a>
+								<a href="javascript:;"><span>多频道点击量统计</span></a>
 							</li>
 							<li id="title3-2">
-								<a href="javascript:;"><span>个人点击量</span></a>
+								<a href="javascript:;"><span>单频道点击量走势</span></a>
 							</li>
 						</ul>
 					</li>
@@ -292,64 +292,17 @@
 			<div id="content3-1" class="body__screen-all">
 				<div class="screen-1">
 					<fieldset id="set3" class="screen-1-field">
-						<legend>频道点击率</legend>
-						<div class="container">
-							<canvas id="myChart1">
-								<script type="text/javascript">
-									let myChart1  =document.getElementById('myChart1').getContext('2d');
-
-									// 配置全局默认信息
-									Chart.defaults.global.defaultFontFamily = 'Lato';
-									Chart.defaults.global.defaultFontSize = 18;
-									Chart.defaults.global.defaultFontColor = '#777';
-
-									// 实例化Chart对象
-									let chart1 = new Chart(myChart1,{
-										type: 'bar', //pie圆形
-										data: {
-											labels: ["浙江卫视","深圳卫视","上海卫视","湖南卫视","天津卫视","四川卫视"],
-											datasets: [{
-												label: "频道点击率",
-												data: [72124,46456,12520,45545,77789,41211],
-												backgroundColor: [
-													'rgba(255,99,132,0.6)',
-													'rgba(54,162,235,0.6)',
-													'rgba(255,206,86,0.6)',
-													'rgba(75,192,45,0.6)',
-													'rgba(124,87,45,0.6)',
-													'rgba(255,14,45,0.6)',
-												],
-												borderWidth: 1,
-												borderColor: 'gray',
-												hoverBorderWidth: 2,
-												hoverBorderColor: 'green'
-											}]
-										},
-										options: {
-											title:{//title
-												display: true,
-												text: "频道点击率",
-												fontSize: 25
-											},
-											legend: {//图例
-												display: true,
-												position: 'right',
-												labels: {
-													fontColor:'#000'
-												}
-											},
-											layout: {//整体
-												padding: {
-													left: 50,right: 50,top: 50,bottom: 50
-												}
-											},
-											tooltips: {//悬浮样式
-												enable: true
-											}
-										}
-									});
-								</script>
-							</canvas>
+						<legend>多频道点击量统计</legend>
+						<div class="container"">
+							<div class="screen-1-findbox">
+								<!-- 搜索部分 -->
+								<select id="myselect1">
+									<option value="0">按频道查询</option>
+									<option value="1">按电台查询</option>
+								</select>
+								<button class="screen-1-findbox-button" onclick="selectForm()">查询</button>
+							</div>
+							<div id="echarts1" style="height: 466px;width: 1110px;"></div>
 						</div>
 					</fieldset>
 				</div>	
@@ -359,63 +312,22 @@
 			<div id="content3-2" class="body__screen-all">
 				<div class="screen-1">
 					<fieldset id="set4" class="screen-1-field">
-						<legend>个人点击量</legend>
-						<div class="container">
-							<canvas id="myChart2">
-								<script type="text/javascript">
-									let myChart2  =document.getElementById('myChart2').getContext('2d');
-									// 配置全局默认信息
-									Chart.defaults.global.defaultFontFamily = 'Lato';
-									Chart.defaults.global.defaultFontSize = 18;
-									Chart.defaults.global.defaultFontColor = '#777';
-									// 实例化Chart对象
-									let chart = new Chart(myChart2,{
-										type: 'bar', //pie圆形
-										data: {
-											labels: ["甲","乙","丙","丁","戊","己","庚"],
-											datasets: [{
-												label: "个人点击量",
-												data: [452,442,724,455,757,336,421],
-												backgroundColor: [
-													'rgba(255,99,132,0.6)',
-													'rgba(54,162,235,0.6)',
-													'rgba(255,206,86,0.6)',
-													'rgba(75,192,45,0.6)',
-													'rgba(124,87,45,0.6)',
-													'rgba(255,14,45,0.6)',
-													'rgba(47,14,45,0.6)'
-												],
-												borderWidth: 1,
-												borderColor: 'gray',
-												hoverBorderWidth: 2,
-												hoverBorderColor: 'green'
-											}]
-										},
-										options: {
-											title:{//title
-												display: true,
-												text: "个人点击量",
-												fontSize: 25
-											},
-											legend: {//图例
-												display: true,
-												position: 'right',
-												labels: {
-													fontColor:'#000'
-												}
-											},
-											layout: {//整体
-												padding: {
-													left: 50,right: 50,top: 50,bottom: 50
-												}
-											},
-											tooltips: {//悬浮样式
-												enable: true
-											}
-										}
-									});
-								</script>
-							</canvas>
+						<legend>单频道点击量走势</legend>
+						<div class="container"">
+							<div class="screen-1-findbox">
+								<select id="myselect2-1">
+									<option value="2" checked>请选择信息源类型</option>
+									<option value="0">频道</option>
+									<option value="1">电台</option>
+								</select>
+								<select id="myselect2-2">
+									<option value="00" checked>请选择信息源</option>
+									<option value="0">浙江卫视</option>
+									<option value="1">江苏卫视</option>
+								</select>
+								<button class="screen-1-findbox-button" onclick="selectForm2()">查询</button>
+							</div>
+							<div id="echarts2" style="height: 466px;width: 1110px;"></div>
 						</div>
 					</fieldset>
 				</div>	
@@ -425,3 +337,4 @@
 	</body>
 </html>
 <!-- 数据可视化部分 -->
+<script type="text/javascript" src="js/myEcharts.js"></script>

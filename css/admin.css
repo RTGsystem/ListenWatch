@@ -96,6 +96,7 @@ body {
 	line-height: 28px;
 	box-sizing: border-box;
 	margin-top: 3px;
+	border-radius: 3px;
 }
 .screen-1-findbox-input {
 	height: 28px;
@@ -507,4 +508,15 @@ input[type=checkbox]{
 	border-right: 1px solid #000;
 	border-bottom: 1px solid #000;
 	font-size: 16px;
+}
+#myselect1{
+	margin-left: 33px;
+	margin-right: 12px;
+}
+#myselect2-1{
+	margin-left: 33px;
+}
+#myselect2-2{
+	margin-left: 10px;
+	margin-right: 12px;
 }

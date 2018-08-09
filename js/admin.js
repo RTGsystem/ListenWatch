@@ -1,11 +1,11 @@
 const ip = 'http://10.20.21.225:8080';
 window.onload = function(){
     // 侧边栏显示隐藏开始
-    if(getCookie('userid') == '' && getCookie('userid') == false){
-        alert('您还未登录！请先登录！');
-        window.location.href = './index.html';
-        return false;
-    }
+    // if(getCookie('userid') == '' && getCookie('userid') == false){
+    //     alert('您还未登录！请先登录！');
+    //     window.location.href = './index.html';
+    //     return false;
+    // }
     $('#title1-1').click(function() {
         $('#content1-1').show();
         $('#content1-2').hide();
@@ -166,24 +166,6 @@ window.onload = function(){
         $('#content2-2').show();
         $('#content3-1').hide();
         $('#content3-2').hide();
-    });
-    $('#title3-1').click(function() {
-        $('#content1-1').hide();
-        $('#content1-2').hide();
-        $('#content1-3').hide();
-        $('#content2-1').hide();
-        $('#content2-2').hide();
-        $('#content3-1').show();
-        $('#content3-2').hide();
-    });
-    $('#title3-2').click(function() {
-        $('#content1-1').hide();
-        $('#content1-2').hide();
-        $('#content1-3').hide();
-        $('#content2-1').hide();
-        $('#content2-2').hide();
-        $('#content3-1').hide();
-        $('#content3-2').show();
     });
     // 侧边栏显示隐藏结束
     // 侧边栏效果开始
@@ -803,6 +785,25 @@ function selectUsers_2_2(){
     });
 }
 // 信息源列表结束2.2
-// window.onbeforeunload = function(){
-//     removeCookie('userid');
-// }
+function exit(){
+    $.ajax({
+        url: ip+ '/user/logOff',
+        type: 'post',
+        dataType: 'JSON',
+        data: {},
+        success: function(res){
+            window.location.href='./index.html';
+        },
+        error: function(err){}
+    });
+}
+window.onbeforeunload = function(){
+    $.ajax({
+        url: ip+ '/user/logOff',
+        type: 'post',
+        dataType: 'JSON',
+        data: {},
+        success: function(res){},
+        error: function(err){}
+    });
+}

@@ -5,6 +5,7 @@ var playChannelName = '浙江卫视';
 var playProId='';
 var currentType = 'TV';
 var currentMethod = 'live';
+var currentProListDate = getNowDate();
 var url = '';
 var flag = 0;
 var flag1 = 0;
@@ -23,12 +24,13 @@ var chpass = document.getElementById('chpass');
 var close = document.getElementById('close');
 var back = document.getElementById('ch-tc-background');
 var confirm = document.getElementById('confirm');
+var viewBox = document.getElementById('view');
 window.onload = function (){
-	if(getCookie('userid') == '' && getCookie('userid') == false){
-		alert('您还未登录！请先登录！');
-		window.location.href = './index.html';
-        return false;
-	}
+	// if(getCookie('userid') == '' && getCookie('userid') == false){
+	// 	alert('您还未登录！请先登录！');
+	// 	window.location.href = './index.html';
+ //        return false;
+	// }
 	if(flag1 == 0){
 		$.ajax({
 			url: ip+ '/user/getUserByUserId',
@@ -171,7 +173,7 @@ function select(){
 		$("#monthList").val(currMonth + "月");
 		$("#date").text(currYear + "-" + currMonth + "-" + d.getDate());
 		ergodicDate(currYear, currMonth);
-		proListForDate(currYear + "-" + currMonth + "-" + d.getDate())
+		//proListForDate(currYear + "-" + currMonth + "-" + d.getDate())
 	});
 	var currN = 0;
 	var currK = 0;
@@ -289,7 +291,7 @@ function select(){
 	$("#yearList,#monthList").on("change", function(e) {
 		ergodicDate($("#yearList").val().split("年")[0], $("#monthList").val().split("月")[0]);
 		$("#date").text($("#yearList").val().split("年")[0] + "-" + $("#monthList").val().split("月")[0] + "-" + currDate);
-		proListForDate($("#yearList").val().split("年")[0] + "-" + $("#monthList").val().split("月")[0] + "-" + currDate)
+		//proListForDate($("#yearList").val().split("年")[0] + "-" + $("#monthList").val().split("月")[0] + "-" + currDate)
 	});
 	$(".day-tabel").on("click", ".tabel-li", function(e) {
 		e.stopPropagation();
@@ -336,18 +338,6 @@ function select(){
 		proListForDate(getDate);
 	});
 }
-function getTrueDate(result){
-	if(result.length === 8){
-		return dateSearch = result.substring(0,5)+'0'+result.charAt(5)+result.charAt(6)+'0'+result.charAt(7);
-	}else if(result.length === 9){
-		if(result.charAt(7)==='-'){
-			return dateSearch = result.substring(0,8)+'0'+result.charAt(8);
-		}else if(result.charAt(6)==='-'){
-			return dateSearch = result.substring(0,5)+'0'+result.substring(5,9);
-		}
-	}
-}
-//获取当前时间
 var beforeDate = false;
 var nowDate,nowTime;
 function getTime(){
@@ -409,6 +399,9 @@ function getProgramList(playType,playChannelName,dateSearch){
 		success: function(res){
 			if(res.resultCode===100){
 				getTime();
+				currentProListDate = dateSearch;
+				var dateback = getDateBack(currentProListDate);
+				$('#date').text(dateback);
 				dateSearch = getDateBack(dateSearch).replace(/\-/g, "");
 				if(dateSearch<nowDate){
 					beforeDate=true;
@@ -440,11 +433,24 @@ function getProgramList(playType,playChannelName,dateSearch){
 							$('#con_list_ul').append(proNews);
 						}
 					}
-				}	
+				}
+				var arrLi = document.getElementsByClassName('static');
+				var isLive = document.getElementsByClassName('live');
+				var currentTop = 0;
+				if(isLive){
+					currentTop = 72*arrLi.length;
+				}else{
+					currentTop = 0;
+				}
+				$('#con_list_ul').scrollTop(currentTop);
+				$('#con_list_ul li div').on('click',function(){
+					selectPro(event);
+				});
 			}
-			$('#con_list_ul li div').on('click',function(){
-				selectPro(event);
-			})
+			else{
+				alert('未保存此频道当日节目单');
+				// proListForDate(currentProListDate);
+			}
 		},
 		error: function(err){
 			console.log('网络请求失败');
@@ -550,9 +556,24 @@ function alter(){
 	}
 }
 function exit(){
-	removeCookie('userid');
-	window.location.href='./index.html';
+	$.ajax({
+		url: ip+ '/user/logOff',
+		type: 'post',
+		dataType: 'JSON',
+		data: {},
+		success: function(res){
+			window.location.href='./index.html';
+		},
+		error: function(err){}
+	});
 }
-// window.onbeforeunload = function(){
-//     removeCookie('userid');
-// }
+window.onbeforeunload = function(){
+    $.ajax({
+		url: ip+ '/user/logOff',
+		type: 'post',
+		dataType: 'JSON',
+		data: {},
+		success: function(res){},
+		error: function(err){}
+	});
+}

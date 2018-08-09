@@ -16,6 +16,7 @@
 	<link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="css/video/video.css">
 	<link rel="stylesheet" type="text/css" href="css/download/download.css">
+	<link rel="stylesheet" href="css/vjs-mycss.css">
 </head>
 <body onselectstart="return false;">
 	<div id="ch-tc-background">
@@ -64,10 +65,9 @@
 		<div id="background"></div>
 		<div class="view">
 			<!-- 视频观看 -->
-			<div class="viewer" id="view">
+			<div class="viewer" id="view" oncontextmenu=self.event.returnValue=false>
 				<video id="myvideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-mycss">
 					<source src='' type="rtmp/flv">
-					<!-- <source src="./media/02.mp4" type="video/mp4"> -->
 				</video>
 			</div>
 			<!-- 视频列表 -->

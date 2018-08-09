@@ -6,6 +6,9 @@ function init(){
 function selectChannel(ev){
 	rmcover();
 	var dateSearch = getNowDate();
+	var dateBack = getDateBack(dateSearch);
+	currentProListDate = dateSearch;
+	$('#date').text(dateBack);
 	if ($(ev.target).parent().parent().attr('id')==='TVList'){
 		playType = 0;
 		playChannelId = $(ev.target).attr('data-id');
@@ -17,6 +20,7 @@ function selectChannel(ev){
 	}else if($(ev.target).parent().parent().attr('id')==='FMList'){
 		playType = 1;
 		playChannelId = $(ev.target).attr('data-id');
+		playChannelName = $(ev.target).text();
 		getChannelURL(playType,playChannelId);
 		$('#con_list_ul').empty();
 		getProgramList(playType,playChannelName,dateSearch);
@@ -27,8 +31,15 @@ function selectChannel(ev){
 }
 function proListForDate(dateSearch){
 	dateSearch = getTrueDate(dateSearch);
-	$('#con_list_ul').empty();
-	getProgramList(playType,playChannelName,dateSearch);
+	var dateNow = getNowDate();
+	if(dateNow<dateSearch){
+		alert('请选择正确日期');
+		var dateBack = getDateBack(currentProListDate);
+		$('#date').text(dateBack);
+	}else{
+		$('#con_list_ul').empty();
+		getProgramList(playType,playChannelName,dateSearch);
+	}
 }
 function selectPro(ev){
 	rmcover();
@@ -41,7 +52,7 @@ function selectPro(ev){
 			changeSource(currentType,currentMethod,'TV','static',url);
 		}else if(playType ===1){
 			changeSource(currentType,currentMethod,'FM','static',url);
-			cover();
+			//cover();
 		}
 	}else if($(ev.target).attr('class')==='live'){
 		getChannelURL(playType,playChannelId);
@@ -49,7 +60,7 @@ function selectPro(ev){
 			changeSource(currentType,currentMethod,'TV','live',url);
 		}else if(playType ===1){
 			changeSource(currentType,currentMethod,'FM','live',url);
-			cover();
+			//cover();
 		}
 	}
 	else{
@@ -83,9 +94,22 @@ function getDateBack(date){
 		 } 
 	return date;
 }
+function getTrueDate(result){
+	if(result.length === 8){
+		return dateSearch = result.substring(0,5)+'0'+result.charAt(5)+result.charAt(6)+'0'+result.charAt(7);
+	}else if(result.length === 9){
+		if(result.charAt(7)==='-'){
+			return dateSearch = result.substring(0,8)+'0'+result.charAt(8);
+		}else if(result.charAt(6)==='-'){
+			return dateSearch = result.substring(0,5)+'0'+result.substring(5,9);
+		}
+	}
+	return result;
+}
+
 function cover(){
 	var $cover = $('.vjs-text-track-display');
-	$cover.append('<div id="boxbox" style="margin-top: 120px;"></div>');
+	$cover.append('<div id="boxbox"></div>');
 }
 function rmcover(){
 	var $cover = $('.vjs-text-track-display');
