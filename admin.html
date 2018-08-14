@@ -3,8 +3,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="js/admin.js"></script>
+		<script type="text/javascript" src="js/globel.js"></script>
 		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/admin.js"></script>
 		<script src="js/yjh_main.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/admin.css">
 		<link rel="stylesheet" href="font/iconfont.css" />
@@ -47,6 +48,9 @@
 							<li id="title2-2">
 								<a href="javascript:;"><span>信息源列表</span></a>
 							</li>
+							<li id="title2-3">
+								<a href="javascript:;"><span>广告专栏</span></a>
+							</li>
 						</ul>
 					</li>
 					<li class="nav-item">
@@ -63,7 +67,37 @@
 				</ul>
 			</div>
 			<!-- 侧边栏结束 -->
+			<div class="select-date">
+				<div class="select-date-header">
+					<ul class="heade-ul">
+						<li class="header-item header-item-one">
+							<select name="" id="yearList1"></select>
+						</li>
+						<li class="header-item header-item-two" onselectstart="return false">
+							<select name="" id="monthList1"></select>
+						</li>
+						<li class="header-item header-item-three" onselectstart="return false">
+							<span class="reback">回到今天</span>
+						</li>
+					</ul>
+				</div>
+				<div class="select-date-body">
+					<ul class="week-list">
+						<li>日</li>
+						<li>一</li>
+						<li>二</li>
+						<li>三</li>
+						<li>四</li>
+						<li>五</li>
+						<li>六</li>
+					</ul>
+					<ul class="day-tabel"></ul>
+				</div>
+			</div>
 			<!-- 内容1.1开始 -->
+			<div id="content1-0" class="body__screen-all">
+				<div class="screen-1" style="font-size: 17px;margin-top: 6px;margin-left: 10px;">欢迎使用浙江广播电视集团 · 监听监看回放系统</div>
+			</div>
 			<div id="content1-1" class="body__screen-all">
 				<div class="screen-1">
 					<fieldset id="set2" class="screen-1-field">
@@ -148,17 +182,10 @@
 							<li class="screen-1-li right-border" style="width: 29%">所属部门</li>
 							<li class="screen-1-li " style="width: 25%;">操作</li>
 						</ul>
-						<div id="content1_2" class="screen-1-list" style="width: 100%">
-							<!-- 
-							<ul class="screen-1-ul">
-								<li class="screen-1-li right-border" style="width: 20%">aaa</li>
-								<li class="screen-1-li right-border" style="width: 20%">sss</li>
-								<li class="screen-1-li right-border" style="width: 20%">ddd</li>
-								<li class="screen-1-li" style="width: 39%;">
-									<button class="screen-1-revise yrzhao" onclick="toggle_button_revise(event)">修改</button><button class="screen-1-delete" style="background-color: #c30;" onclick="createUlinScreen1_2('00002253','赵杨晶','融媒体技术中心研发部')">删除</button>
-								</li>
-							</ul> -->
+						<div id="content1_2" class="screen-1-list" style="width: 100%">、
+							
 						</div>
+						<div class="tcdPageCode"></div>
 					</fieldset>
 				</div>	
 			</div>
@@ -219,6 +246,7 @@
 								<label class="allchoice" for="checkdatabtn">全选</label> 
 							</li>
 						</ul>
+						<div class="page-content"></div>
 						<!-- 保存与撤销按钮 -->
 						<button class="screen-1-saveall" onclick="checkSave()">全部保存</button>
 						<button class="screen-1-saveall" onclick="checkCancel()">撤销</button>
@@ -288,6 +316,37 @@
 				</div>	
 			</div>
 			<!-- 内容2.2结束 -->
+			<!-- 内容2.3开始 -->
+			<div id="content2-3" class="body__screen-all">
+				<div class="screen-1">
+					<fieldset class="screen-1-field">
+						<legend>广告专栏</legend>
+						<div class="screen-1-findbox">
+							<select id="myselect3-1">
+								<option value="2" checked>请选择信息源类型</option>
+								<option value="0">频道</option>
+								<option value="1">电台</option>
+							</select>
+							<select id="myselect3-2">
+								<option value="0">请选择信息源</option>
+							</select>
+							<div id="nowdate2"></div>
+							<button class="screen-1-findbox-button" onclick="selectForm3()">查询</button>
+						</div>
+						<hr>
+						<ul class="screen-1-ul" style="border-top: 1px solid">
+							<li class="screen-1-li right-border" style="width: 35%">广告名称</li>
+							<li class="screen-1-li right-border" style="width: 15%">播放日期</li>
+							<li class="screen-1-li right-border" style="width: 24%">播放时间</li>
+							<li class="screen-1-li" style="width: 25%">播放状态</li>
+						</ul>
+						<div id="content2_3" class="screen-1-list" style="width: 100%">
+							
+						</div>
+					</fieldset>
+				</div>	
+			</div>
+			<!-- 内容2.3结束 -->
 			<!-- 内容3.1开始 -->
 			<div id="content3-1" class="body__screen-all">
 				<div class="screen-1">
@@ -297,8 +356,9 @@
 							<div class="screen-1-findbox">
 								<!-- 搜索部分 -->
 								<select id="myselect1">
-									<option value="0">按频道查询</option>
-									<option value="1">按电台查询</option>
+									<option value="2">请选择信息源类型</option>
+									<option value="0">频道</option>
+									<option value="1">电台</option>
 								</select>
 								<button class="screen-1-findbox-button" onclick="selectForm()">查询</button>
 							</div>
@@ -321,9 +381,7 @@
 									<option value="1">电台</option>
 								</select>
 								<select id="myselect2-2">
-									<option value="00" checked>请选择信息源</option>
-									<option value="0">浙江卫视</option>
-									<option value="1">江苏卫视</option>
+									<option value="0">请选择信息源</option>
 								</select>
 								<button class="screen-1-findbox-button" onclick="selectForm2()">查询</button>
 							</div>

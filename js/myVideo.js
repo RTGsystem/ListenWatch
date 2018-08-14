@@ -18,7 +18,7 @@ function player_live(){
 		$('.vjs-mycss .vjs-remaining-time').css('display','none');
 		$('.vjs-mycss .vjs-live-control').attr('id','liveControl');
 		$('.vjs-mycss .vjs-live-control').css('cssText','display:inline-block!important');
-		$('.vjs-mycss .vjs-live-control').text('当前正在直播·'+playChannelName);
+		$('.vjs-mycss .vjs-live-control').text('当前正在直播 · '+playChannelName);
 		$('.vjs-mycss .vjs-live-control').css('text-align','left');
 		$('.vjs-mycss .vjs-live-control').css('color','#fff');
 		$('.vjs-mycss .vjs-progress-control').css('display','none');

@@ -1,4 +1,5 @@
 const ip = 'http://10.20.21.225:8080';
+// const ip = '';
 window.onresize = window.onload = function() {
 	var submitButton = document.getElementById('SubmitButton');
 	var username = document.getElementById('username');
@@ -41,6 +42,11 @@ window.onresize = window.onload = function() {
 		}
 	}
 	
+}
+function keyLogin(){
+	if (event.keyCode==13) {
+		document.getElementById("SubmitButton").click(); //调用登录按钮的登录事件
+	}
 }
 function forget(){
 	alert('请联系后台！');

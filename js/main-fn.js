@@ -33,7 +33,7 @@ function proListForDate(dateSearch){
 	dateSearch = getTrueDate(dateSearch);
 	var dateNow = getNowDate();
 	if(dateNow<dateSearch){
-		alert('请选择正确日期');
+		alert('还未到该日期！');
 		var dateBack = getDateBack(currentProListDate);
 		$('#date').text(dateBack);
 	}else{
@@ -47,7 +47,8 @@ function selectPro(ev){
 		var dateSearch = $('#date').text();
 		dateSearch = getTrueDate(dateSearch);
 		playProId = $(ev.target).parent().attr('data-id');
-		getProgramUrl(playType,playProId,dateSearch);
+		var channelname = $('#currentPro').text().split('·')[1].slice(2);
+		getProgramUrl(playType,playProId,channelname,dateSearch);
 		if(playType ===0){
 			changeSource(currentType,currentMethod,'TV','static',url);
 		}else if(playType ===1){
@@ -67,46 +68,6 @@ function selectPro(ev){
 		alert('该节目还未到播放时间');
 	}
 }
-function getNowDate(){
-	var now = new Date();
-	var month,day;
-	if((now.getMonth()+1)<10){
-		month ='-'+'0'+(now.getMonth()+1).toString()+'-';
-	}else{
-		month ='-'+ (now.getMonth()+1).toString()+'-';
-	}
-	if(now.getDate()<10){
-		day = '0'+now.getDate().toString();
-	}else{
-		day = now.getDate().toString();
-	}
-	return now.getFullYear().toString()+month+day;
-}
-function getDateBack(date){
-	if(date.charAt(5)==='0'){
-		 date = date.substring(0,5)+date.substring(6,10);
-		 if(date.charAt(date.length-2)==='0'){
-		 	date = date.substring(0,date.length-2)+date.substring(date.length-1,date.length);
-		 } 
-	}
-	if(date.charAt(date.length-2)==='0'){
-		 	date = date.substring(0,date.length-2)+date.substring(date.length-1,date.length);
-		 } 
-	return date;
-}
-function getTrueDate(result){
-	if(result.length === 8){
-		return dateSearch = result.substring(0,5)+'0'+result.charAt(5)+result.charAt(6)+'0'+result.charAt(7);
-	}else if(result.length === 9){
-		if(result.charAt(7)==='-'){
-			return dateSearch = result.substring(0,8)+'0'+result.charAt(8);
-		}else if(result.charAt(6)==='-'){
-			return dateSearch = result.substring(0,5)+'0'+result.substring(5,9);
-		}
-	}
-	return result;
-}
-
 function cover(){
 	var $cover = $('.vjs-text-track-display');
 	$cover.append('<div id="boxbox"></div>');
