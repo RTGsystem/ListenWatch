@@ -6,7 +6,7 @@ var list2 = [];
 window.onload = function(){
     // 侧边栏显示隐藏开始
     // if(getCookie('userid') == '' && getCookie('userid') == false){
-    //   alert('您还未登录！请先登录！');
+    //   alert('您还未登录请先登录');
     //   window.location.href = './index.html';
     //   return false;
     // }
@@ -20,7 +20,7 @@ window.onload = function(){
         success: function(res){
             if(res.resultCode==100){
                 if(res.resultData.resultData[0].identity == 0 && res.resultData.resultData[0].formpurview == 0){
-                    alert('您不具有管理员功能且不能观看频道报表，无法访问本页面！');
+                    alert('您不具有管理员功能且不能观看频道报表，无法访问本页面');
                     window.opener = null;
                     window.open('','_self');
                     window.close();
@@ -39,7 +39,7 @@ window.onload = function(){
             }
         },
         error: function(err){
-            console.log('网络请求失败，无法登录！');
+            console.log('网络请求失败，无法登录');
             window.location.href = './index.html';
         }
     });
@@ -97,13 +97,13 @@ window.onload = function(){
             success: function(res){
                 if(res.resultCode==100){
                     if(res.resultData.resultData[0].identity != 1){
-                        alert('您不具有管理员权限，无法使用本功能！');
+                        alert('您不具有管理员权限，无法使用本功能');
                         window.location.href = './main.html';
                     }
                 }
             },
             error: function(err){
-                console.log('网络请求失败！');
+                console.log('网络请求失败');
             }
         });
         $('#content1-0').hide();
@@ -127,7 +127,7 @@ window.onload = function(){
             success: function(res){
                 if(res.resultCode==100){
                     if(res.resultData.resultData[0].identity != 1){
-                        alert('您不具有管理员权限，无法使用本功能！');
+                        alert('您不具有管理员权限，无法使用本功能');
                         window.location.href = './main.html';
                     }else{
                         $('#content1_2').empty();
@@ -145,10 +145,13 @@ window.onload = function(){
                                 }
                                 if (res.resultCode == 100) {
                                     $('#content1_2').empty();
-                                    $(".tcdPageCode").createPage({ 
+                                    $(".tcdPageCode").createPage({
                                         pageCount: res.resultData.page.pages,
-                                        current:1,
+                                        current: 1,
                                         backFn:function(p){
+                                            if (!p) {
+                                                p = 1;
+                                            }
                                             $.ajax({
                                                 url: ip + '/user/getUsers',
                                                 type: 'post',
@@ -214,9 +217,10 @@ window.onload = function(){
                 }
             },
             error: function(err){
-                console.log('网络请求失败！');
+                console.log('网络请求失败');
             }
         });
+        $('.tcdPageCode').show();
         $('#content1-0').hide();
         $('#content1-1').hide();
         $('#content1-2').show();
@@ -239,7 +243,7 @@ window.onload = function(){
                 if(res.resultCode==100){
                     flag1 = 1;
                     if(res.resultData.resultData[0].identity != 1){
-                        alert('您不具有管理员权限，无法使用本功能！');
+                        alert('您不具有管理员权限，无法使用本功能');
                         window.location.href = './main.html';
                     }else{
                         $('#select_input2').val('');
@@ -292,7 +296,7 @@ window.onload = function(){
                 }
             },
             error: function(err){
-                console.log('网络请求失败！');
+                console.log('网络请求失败');
             }
         });
         $('#content1-0').hide();
@@ -316,13 +320,13 @@ window.onload = function(){
             success: function(res){
                 if(res.resultCode==100){
                     if(res.resultData.resultData[0].identity != 1){
-                        alert('您不具有管理员权限，无法使用本功能！');
+                        alert('您不具有管理员权限，无法使用本功能');
                         window.location.href = './main.html';
                     }
                 }
             },
             error: function(err){
-                console.log('网络请求失败！');
+                console.log('网络请求失败');
             }
         });
         $('#content1-0').hide();
@@ -346,7 +350,7 @@ window.onload = function(){
             success: function(res){
                 if(res.resultCode==100){
                     if(res.resultData.resultData[0].identity != 1){
-                        alert('您不具有管理员权限，无法使用本功能！');
+                        alert('您不具有管理员权限，无法使用本功能');
                         window.location.href = './main.html';
                     }else{
                         $('#select_input3').val('');
@@ -389,7 +393,7 @@ window.onload = function(){
                 }
             },
             error: function(err){
-                console.log('网络请求失败！');
+                console.log('网络请求失败');
             }
         });
         $('#content1-0').hide();
@@ -416,7 +420,13 @@ window.onload = function(){
             success: function(res){
                 if(res.resultCode===100){
                     $('#content2_3').empty();
-                    var nowTime = new Date().getHours() + '' + new Date().getMinutes() + '' + new Date().getSeconds();
+                    function check(time){
+                        if(time < 10){
+                            time = '0' + time;
+                        }
+                        return time;
+                    }
+                    var nowTime = check(new Date().getHours()) + '' + check(new Date().getMinutes()) + '' + check(new Date().getSeconds());
                     var arr = res.resultData.resultData;
                     for(var i=0; i<arr.length; i++){
                         if (arr[i].proname.search('广告') != -1||arr[i].proname.search('宣传片') != -1) {
@@ -546,9 +556,13 @@ window.onload = function(){
 // 添加用户开始1.1
 function addsuccess(){
     if($('#input1-1_1').val() == ''||$('#input2-1_1').val() == ''||$('#input3-1_1').val() == ''||$('#input4-1_1').val() == ''||$('#select1-1_1').val() == 0){
-        alert('您输入的信息不完整，请继续输入！');
+        alert('您输入的信息不完整，请继续输入');
     }else if($('#input3-1_1').val() != $('#input4-1_1').val()){
         alert('您两次输入的密码不一致');
+    }else if($('#input2-1_1').val().length < 4){
+        alert('您的用户名应不少于4位');
+    }else if(!(/^[0-9]{1,9}$/.test($('#input2-1_1').val()))){
+        alert('您输入的用户名需要是纯数字且不大于9位');
     }else{
         function check(boolean){
             return boolean == true ? 1 : 0;
@@ -561,7 +575,7 @@ function addsuccess(){
                 username: $('#input1-1_1').val(),
                 userid: $('#input2-1_1').val(),
                 department: $('#select1-1_1').find("option:selected").text(),
-                password: $('#input3-1_1').val(),
+                password: hex_md5($('#input3-1_1').val()),
                 tvdownload: check($('#checkbox1').is(':checked')),
                 fmdownload: check($('#checkbox2').is(':checked')),
                 formpurview: check($('#checkbox3').is(':checked')),
@@ -652,7 +666,6 @@ function toggle_button_revise(ev){
     }
 }
 function selectUsers(){
-    $('.tcdPageCode').empty();
     let val = $('#selectkey').find(':checked').val();
     let url = '';
     let key = '';
@@ -660,61 +673,149 @@ function selectUsers(){
     if (val == ''){
         url = '/user/getUsers';
         key = '';
+        $('.tcdPageCode').show();
     }else if (val == '用户名') {
         url = '/user/getUserByUserId';
         key = 'userid';
         if(!(/^[0-9]{1,9}$/.test(value))){
             $('#content1_2').empty();
             alert('没有查询到该用户');
+            $('.tcdPageCode').hide();
             return false;
         }
+        $('.tcdPageCode').hide();
     }else if(val == '姓名'){
         url = '/user/getUserByUsername';
         key = 'username';
+        $('.tcdPageCode').hide();
     }else if(val == '所属部门'){
         url = '/user/getUserByDept';
         key = 'department';
+        $('.tcdPageCode').show();
     }else{
         url = '';
         key = '';
+        $('.tcdPageCode').hide();
     }
     let json = {};
     json[key] = value;
-    json['pn'] = 1;
-    $.ajax({
-        url: ip + url,
-        type: 'post',
-        dataType: 'JSON',
-        data: json,
-        success: function(res){
-            if (res.resultCode == 100) {
-                function check(boolean){
-                    return boolean == 1 ? '是' : '否';
+    if(val == '所属部门'){
+        json['pn'] = 1;
+        $.ajax({
+            url: ip + url,
+            type: 'post',
+            dataType: 'JSON',
+            data: json,
+            success: function(res){
+                if (res.resultCode == 100) {
+                    function check(boolean){
+                        return boolean == 1 ? '是' : '否';
+                    }
+                    $(".tcdPageCode").createPage({
+                        pageCount: res.resultData.page.pages,
+                        current:1,
+                        backFn:function(p){
+                            if (!p) {
+                                p = 1;
+                            }
+                            json['pn'] = p;
+                            $.ajax({
+                                url: ip + url,
+                                type: 'post',
+                                dataType: 'JSON',
+                                data: json,
+                                success: function(res){
+                                    if (res.resultCode == 100) {
+                                        function check(boolean){
+                                            return boolean == 1 ? '是' : '否';
+                                        }
+                                        $('#content1_2').empty();
+                                        let arr_temp = res.resultData.resultData;
+                                        for(let i=0;i<arr_temp.length;i++){
+                                            let content = `<ul class='screen-1-ul'>
+                                                <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].userid}</li>
+                                                <li class='screen-1-li right-border' style='width: 15%'>${check(arr_temp[i].identity)}</li>
+                                                <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].username}</li>
+                                                <li class='screen-1-li right-border' style='width: 29%'>${arr_temp[i].department}</li>
+                                                <li class='screen-1-li' style='width: 25%'>
+                                                    <button class='screen-1-revise' onclick='toggle_button_revise(event)'>修改</button> 
+                                                    <button class='screen-1-delete' style='background: #c30' onclick='delete_ul(event)'>删除</button>
+                                                </li>
+                                            </ul>`;
+                                            $('#content1_2').append(content);
+                                        }
+                                    }else{
+                                        $('#content1_2').empty();
+                                        alert(res.resultMessage);
+                                    }
+                                },
+                                error: function(err){
+                                    console.log("网络请求失败" + err);
+                                }
+                            });
+                        }
+                    });
+                    $('#content1_2').empty();
+                    let arr_temp = res.resultData.resultData;
+                    for(let i=0;i<arr_temp.length;i++){
+                        let content = `<ul class='screen-1-ul'>
+                            <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].userid}</li>
+                            <li class='screen-1-li right-border' style='width: 15%'>${check(arr_temp[i].identity)}</li>
+                            <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].username}</li>
+                            <li class='screen-1-li right-border' style='width: 29%'>${arr_temp[i].department}</li>
+                            <li class='screen-1-li' style='width: 25%'>
+                                <button class='screen-1-revise' onclick='toggle_button_revise(event)'>修改</button> 
+                                <button class='screen-1-delete' style='background: #c30' onclick='delete_ul(event)'>删除</button>
+                            </li>
+                        </ul>`;
+                        $('#content1_2').append(content);
+                    }
+                }else{
+                    $('#content1_2').empty();
+                    alert(res.resultMessage);
                 }
-                $('#content1_2').empty();
-                let arr_temp = res.resultData.resultData;
-                for(let i=0;i<arr_temp.length;i++){
-                    let content = `<ul class='screen-1-ul'>
-                        <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].userid}</li>
-                        <li class='screen-1-li right-border' style='width: 15%'>${check(arr_temp[i].identity)}</li>
-                        <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].username}</li>
-                        <li class='screen-1-li right-border' style='width: 29%'>${arr_temp[i].department}</li>
-                        <li class='screen-1-li' style='width: 25%'>
-                            <button class='screen-1-revise' onclick='toggle_button_revise(event)'>修改</button> 
-                            <button class='screen-1-delete' style='background: #c30' onclick='delete_ul(event)'>删除</button>
-                        </li>
-                    </ul>`;
-                    $('#content1_2').append(content);
-                }
-            }else{
-                $('#content1_2').empty();
-                alert(res.resultMessage);
+            },
+            error: function(err){
+                console.log("网络请求失败" + err);
             }
-        },
-        error: function(err){
-            console.log("网络请求失败" + err);
-        }
-    });
+        });
+        
+    }else{
+        $.ajax({
+            url: ip + url,
+            type: 'post',
+            dataType: 'JSON',
+            data: json,
+            success: function(res){
+                if (res.resultCode == 100) {
+                    function check(boolean){
+                        return boolean == 1 ? '是' : '否';
+                    }
+                    $('#content1_2').empty();
+                    let arr_temp = res.resultData.resultData;
+                    for(let i=0;i<arr_temp.length;i++){
+                        let content = `<ul class='screen-1-ul'>
+                            <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].userid}</li>
+                            <li class='screen-1-li right-border' style='width: 15%'>${check(arr_temp[i].identity)}</li>
+                            <li class='screen-1-li right-border' style='width: 15%'>${arr_temp[i].username}</li>
+                            <li class='screen-1-li right-border' style='width: 29%'>${arr_temp[i].department}</li>
+                            <li class='screen-1-li' style='width: 25%'>
+                                <button class='screen-1-revise' onclick='toggle_button_revise(event)'>修改</button> 
+                                <button class='screen-1-delete' style='background: #c30' onclick='delete_ul(event)'>删除</button>
+                            </li>
+                        </ul>`;
+                        $('#content1_2').append(content);
+                    }
+                }else{
+                    $('#content1_2').empty();
+                    alert(res.resultMessage);
+                }
+            },
+            error: function(err){
+                console.log("网络请求失败" + err);
+            }
+        });
+    }
 }
 // 用户列表结束1.2
 // 用户权限管理开始1.3
@@ -796,6 +897,7 @@ function checkSave(){
         json['formpurview'] = parse(li[7].children[0].checked);
         arr.push(json);
     }
+        console.log(arr);
     $.ajax({
         url: ip + '/user/updatePermission',
         type: 'post',
@@ -804,7 +906,7 @@ function checkSave(){
         contentType : 'application/json;charset=UTF-8',
         success: function(res){
             if (res.resultCode == 100) {
-                alert('权限修改成功！');
+                alert('权限修改成功');
             }else{
                 alert(res.resultMessage);
             }
@@ -902,14 +1004,14 @@ function yadd(){
         }
     }
     if($('#yinput1').val() == ''||$('#yinput2').val() == ''||$('#yinput3').val() == ''){
-        alert('您输入的信息不完整，请继续输入！');
+        alert('您输入的信息不完整，请继续输入');
         return false;
     }else{
         if (file == null||file == ""){
             alert("请选择要上传的图片!");
             return false;
         }else if (isValidIP($('#yinput3').val())){
-            alert("请输入正整数！");
+            alert("请输入正整数");
         }else if (file.lastIndexOf('.')==-1){   //如果不存在"."
             alert("请上传图片文件!");
             return false;
@@ -1131,9 +1233,9 @@ function selectForm3(){
     var t1 = document.getElementById('myselect3-1').value;
     var t2 = document.getElementById('myselect3-2').value;
     if (t1 == 2) {
-        alert('请选择信息源类型！');
+        alert('请选择信息源类型');
     }else if(t2 == 0){
-        alert('请选择信息源名称！')
+        alert('请选择信息源名称')
     }else{
         $.ajax({
             url: ip + '/program/getProgramList',

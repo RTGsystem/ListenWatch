@@ -4,7 +4,7 @@ window.onresize = window.onload = function() {
 	var submitButton = document.getElementById('SubmitButton');
 	var username = document.getElementById('username');
 	var password = document.getElementById('pwd');
-	var check = document.getElementById('RememberCheck1');
+	//var check = document.getElementById('RememberCheck1');
 	$("#a0").css("width", $(window).width());
 	$("#a0").css("height", $(window).height());
 	$("#a1").css("width", $(window).width());
@@ -15,17 +15,17 @@ window.onresize = window.onload = function() {
 	$("#a3").css("height", $(window).height());
 	submitButton.onclick = function() {
 		if(username.value == ''||password.value == ''){
-			alert('您的输入不完整！');
+			alert('您的输入不完整');
 		}else{
-			var isadmin = check.checked == true ? 0 : 1;
+			//var isadmin = check.checked == true ? 0 : 1;
 			$.ajax({
 				url: ip + '/user/userLogin',
 				type: 'post',
 				dataType: 'JSON',
 				data: {
 					userid: username.value,
-					password: password.value,
-					identity: isadmin
+					password: hex_md5(password.value),
+					identity: 0
 				},
 				success: function(res){
 					if (res.resultCode == 100) {
@@ -49,7 +49,7 @@ function keyLogin(){
 	}
 }
 function forget(){
-	alert('请联系后台！');
+	alert('请联系后台');
 }
 // var i = 0;
 // var c;

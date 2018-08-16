@@ -28,7 +28,7 @@ var confirm = document.getElementById('confirm');
 var viewBox = document.getElementById('view');
 window.onload = function (){
 	// if(getCookie('userid') == '' && getCookie('userid') == false){
-	// 	alert('您还未登录！请先登录！');
+	// 	alert('您还未登录请先登录');
 	// 	window.location.href = './index.html';
  //        return false;
 	// }
@@ -55,7 +55,7 @@ window.onload = function (){
 				}
 			},
 			error: function(err){
-				console.log('网络请求失败，无法登录！');
+				console.log('网络请求失败，无法登录');
 				window.location.href = './index.html';
 			}
 		});
@@ -354,10 +354,10 @@ function alter(){
 	var np = document.getElementById('np').value;
 	var rp = document.getElementById('rp').value;
 	if (op == ''||np == ''||rp == '') {
-		alert('您的输入不完整！');
+		alert('您的输入不完整');
 		return false;
 	}else if(np != rp){
-		alert('两次输入的新密码不一致！');
+		alert('两次输入的新密码不一致');
 		return false;
 	}else{
 		$.ajax({
@@ -372,9 +372,9 @@ function alter(){
 			},
 			success: function(res){
 				if(res.resultCode===100){
-					alert('密码修改成功！');
+					alert('密码修改成功');
 				}else{
-					alert('旧密码输入错误！');
+					alert('旧密码输入错误');
 				}
 			},
 			error: function(err){
