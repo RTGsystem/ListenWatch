@@ -101,7 +101,7 @@ window.onload = function (){
 	var arrLi = document.getElementsByClassName('static');
 	var isLive = document.getElementsByClassName('live');
 	var currentTop = 0;
-	if(isLive){
+	if(isLive[0]){
 		currentTop = 73 * (arrLi.length - 2);
 	}else{
 		currentTop = 0;
