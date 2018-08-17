@@ -779,7 +779,6 @@ function selectUsers(){
                 console.log("网络请求失败" + err);
             }
         });
-        
     }else{
         $.ajax({
             url: ip + url,

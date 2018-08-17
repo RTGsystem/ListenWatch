@@ -158,6 +158,14 @@ function select(){
 			$(".select-date").css("display", "none")
 		}
 	});
+	$(".reback").on("click", function(e) {
+		e.stopPropagation();
+		if ($(".select-date").css("display") == "none") {
+			$(".select-date").css("display", "block")
+		} else {
+			$(".select-date").css("display", "none")
+		}
+	});
 	var yearArr = [];
 	var monthArr = [];
 	for (var i = 1990; i < 2099; i++) {
@@ -183,7 +191,8 @@ function select(){
 		$("#monthList").val(currMonth + "月");
 		$("#date").text(currYear + "-" + currMonth + "-" + d.getDate());
 		ergodicDate(currYear, currMonth);
-		//proListForDate(currYear + "-" + currMonth + "-" + d.getDate())
+		var getDate = $("#yearList").val().split("年")[0] + "-" + $("#monthList").val().split("月")[0] + "-" + new Date().getDate();
+		proListForDate(getDate);
 	});
 	var currN = 0;
 	var currK = 0;
@@ -295,7 +304,7 @@ function select(){
 			}
 		}
 	}
-	$("#yearList,#monthList, .reback").on("click", function(e) {
+	$("#yearList,#monthList,.reback").on("click", function(e) {
 		e.stopPropagation()
 	});
 	$("#yearList,#monthList").on("change", function(e) {
@@ -321,7 +330,7 @@ function select(){
 				$("#yearList").val(($("#yearList").val().split("年")[0]-1) + "年");
 				$("#monthList").val(12 + "月")
 			}
-		} else {
+		}else{
 			if (parentIndex == currK && $(this).html() < 7) {
 				if (parseInt($("#monthList").val().split("月")[0]) + 1 > 12) {
 					selectDate = (parseInt($("#yearList").val().split("年")[0]) + 1) + "-" + 1 + "-" + $(this).html();
